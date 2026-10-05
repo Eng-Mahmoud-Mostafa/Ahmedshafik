@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@theme {
+  /* Midnight black and charcoal surfaces */
+  --color-ink: #05060a;
+  --color-ink-soft: #0a0c11;
+  --color-charcoal: #11141b;
+  --color-charcoal-raised: #191d26;
+  --color-charcoal-line: #262b36;
+
+  /* Warm white typography */
+  --color-bone: #f6f2ea;
+  --color-bone-muted: #b7b0a3;
+  --color-bone-faint: #7d776d;
+
+  /* Egyptian red */
+  --color-egypt-red: #ce1126;
+  --color-egypt-red-deep: #8a0b19;
+  --color-egypt-red-soft: #ff3b4f;
+
+  /* Restrained metallic gold */
+  --color-gold: #c9a44d;
+  --color-gold-deep: #8c6f2b;
+
+  --font-display: var(--font-display), "Arial Narrow", "Helvetica Neue", sans-serif;
+  --font-body: var(--font-body), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --shadow-glow-red: 0 0 60px -12px rgb(206 17 38 / 55%);
+  --shadow-glow-gold: 0 0 40px -16px rgb(201 164 77 / 45%);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Keeps anchored sections clear of the slim fixed header. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    /* Guards every page against accidental horizontal scroll. */
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-egypt-red);
+    color: var(--color-bone);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+
+  /* Arabic numerals stay Latin for the technical values (190 cm, 18). */
+  [dir="rtl"] {
+    font-feature-settings: "kern";
+  }
+
+  /* Arabic glyphs get a dedicated face with correct line metrics. */
+  [dir="rtl"] body {
+    font-family: var(--font-arabic), var(--font-body), system-ui, sans-serif;
+    line-height: 1.9;
+  }
+
+  [dir="rtl"] .display-headline {
+    font-family: var(--font-arabic), var(--font-display), sans-serif;
+    letter-spacing: 0;
+    line-height: 1.45;
+  }
+}
+
+@layer components {
+  .display-headline {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--color-bone-faint);
+  }
+
+  [dir="rtl"] .eyebrow {
+    letter-spacing: 0;
+  }
+
+  .hairline {
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      rgb(246 242 234 / 18%) 20%,
+      rgb(246 242 234 / 18%) 80%,
+      transparent
+    );
+  }
+
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image: radial-gradient(
+      circle at 20% 15%,
+      rgb(206 17 38 / 22%),
+      transparent 55%
+    ),
+      radial-gradient(circle at 85% 70%, rgb(201 164 77 / 10%), transparent 50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

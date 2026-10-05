@@ -1,0 +1,285 @@
+import type { Locale } from "@/content/types";
+
+/**
+ * Interface strings.
+ *
+ * `en` is the source of truth and `ar` is typed against it, so a missing
+ * Arabic key is a compile error rather than a silent fallback to English.
+ */
+export const en = {
+  meta: {
+    title: "Ahmed Said Shafik — Egyptian Volleyball Outside Hitter",
+    description:
+      "Official portfolio of Ahmed Said Shafik, أحمد سعيد شفيق — Egyptian international outside hitter, born 7 December 1994, 190 cm.",
+  },
+  nav: {
+    profile: "Profile",
+    career: "Career",
+    achievements: "Achievements",
+    media: "Media",
+    contact: "Contact",
+    openMenu: "Open navigation",
+    closeMenu: "Close navigation",
+    languageLabel: "Language",
+    switchTo: "Switch language to",
+    skipToContent: "Skip to content",
+    navLabel: "Main navigation",
+  },
+  hero: {
+    eyebrow: "Egyptian International",
+    titleLineOne: "Ahmed",
+    titleLineTwo: "Said Shafik",
+    subtitle: "Egyptian International · Outside Hitter",
+    exploreStory: "Explore My Story",
+    viewAchievements: "View Achievements",
+    factsLabel: "Player facts",
+    sceneLabel: "Interactive athlete scene",
+    scrollHint: "Scroll",
+  },
+  scene: {
+    loading: "Building the 3D scene",
+    loadingHint: "Preparing the athlete scene…",
+    unsupportedTitle: "3D scene unavailable",
+    unsupportedBody:
+      "This browser could not start WebGL, so the interactive scene is disabled. All of the information below is still available as text.",
+    actionsLabel: "Scene actions",
+    actionsHelp:
+      "Accessible alternatives to the interactive hotspots in the 3D scene.",
+    journey: "My Journey",
+    playerProfile: "Player Profile",
+    beyondCourt: "Beyond the Court",
+    trophy: "Trophy",
+    trophyNote: "Decorative placeholder — not an award record",
+    medal: "Medal",
+    medalNote: "Decorative placeholder — not an award record",
+    beyondTitle: "Beyond the Court",
+    beyondEmptyTitle: "Nothing published here yet",
+    beyondEmptyBody:
+      "Personal content for this area has not been approved for publication. It stays empty until approved material is supplied.",
+    beyondClose: "Close",
+    characterNote:
+      "The 3D athlete is a stylised placeholder, not a likeness of Ahmed Said Shafik.",
+  },
+  profile: {
+    eyebrow: "Profile",
+    title: "Player profile",
+    biographyLabel: "Biography",
+    factsLabel: "Player information",
+    competitionsLabel: "Competition records",
+    nameLabel: "Full name",
+    arabicLabel: "Name in Arabic",
+    professionalLabel: "Also listed professionally as",
+    nationalityLabel: "Nationality",
+    positionLabel: "Position",
+    dobLabel: "Date of birth",
+    heightLabel: "Height",
+    ageLabel: "Age",
+    jerseyLabel: "Jersey number",
+    sourcesLabel: "Source",
+    verified: "Verified",
+    ownerApproved: "Approved by player",
+    scopeNote:
+      "Jersey numbers are listed per competition and are not a career-long number.",
+  },
+  career: {
+    eyebrow: "Career",
+    title: "Career timeline",
+    emptyTitle: "No career entries yet",
+    emptyBody:
+      "Only verified entries are shown. Club history and other records are added once they are confirmed.",
+    categoryNational: "National team",
+    categoryClub: "Club",
+    categoryEducation: "Education",
+  },
+  achievements: {
+    eyebrow: "Achievements",
+    title: "Achievements",
+    filterAll: "All",
+    filterInternational: "International",
+    filterClub: "Club",
+    filterIndividual: "Individual awards",
+    emptyTitle: "Nothing verified in this category",
+    emptyBody:
+      "No verified records exist here yet. Titles, medals and individual awards are published only after verification.",
+    disclaimer:
+      "The trophy and medal in the 3D scene are decorative placeholders and do not represent awards.",
+  },
+  media: {
+    eyebrow: "Media",
+    title: "Media gallery",
+    emptyTitle: "No media published yet",
+    emptyBody:
+      "Approved photographs and video links will appear here. Placeholder imagery is never shown.",
+    slotLabel: "Reserved for approved media",
+  },
+  contact: {
+    eyebrow: "Contact",
+    title: "Get in touch",
+    intro:
+      "For scouting, club and media enquiries about Ahmed Said Shafik.",
+    nameLabel: "Your name",
+    emailLabel: "Email address",
+    categoryLabel: "Inquiry category",
+    categoryPlaceholder: "Select a category",
+    messageLabel: "Message",
+    messageHint: "Do not include sensitive personal information.",
+    submit: "Send inquiry",
+    submitDisabled: "Sending unavailable",
+    unavailableTitle: "Form not connected yet",
+    unavailableBody:
+      "No email service is configured for this site, so this form cannot send. Nothing is delivered or stored.",
+    errorRequired: "This field is required.",
+    errorEmail: "Enter a valid email address.",
+    errorCategory: "Choose an inquiry category.",
+    errorTooLong: "Message is too long.",
+  },
+  footer: {
+    rights: "Portfolio",
+    disclaimer:
+      "Verified facts only. Unverified club history, statistics and awards are deliberately not shown.",
+    modelNote:
+      "The 3D athlete is a development placeholder pending a model of Ahmed.",
+  },
+};
+
+export type Dictionary = typeof en;
+
+export const ar: Dictionary = {
+  meta: {
+    title: "أحمد سعيد شفيق — لاعب كرة يد مصري",
+    description:
+      "الملف الرسمي للاعب أحمد سعيد شفيق، لاعب مصري في مركز المضرب الخارجي، مواليد ٧ ديسمبر ١٩٩٤، الطول ١٩٠ سم.",
+  },
+  nav: {
+    profile: "الملف الشخصي",
+    career: "المسيرة",
+    achievements: "الإنجازات",
+    media: "الصور",
+    contact: "تواصل",
+    openMenu: "فتح القائمة",
+    closeMenu: "إغلاق القائمة",
+    languageLabel: "اللغة",
+    switchTo: "تغيير اللغة إلى",
+    skipToContent: "تخطي إلى المحتوى",
+    navLabel: "التنقل الرئيسي",
+  },
+  hero: {
+    eyebrow: "لاعب مصري دولي",
+    titleLineOne: "أحمد",
+    titleLineTwo: "سعيد شفيق",
+    subtitle: "لاعب مصري دولي · مضرب خارج",
+    exploreStory: "اكتشف قصتي",
+    viewAchievements: "عرض الإنجازات",
+    factsLabel: "بيانات اللاعب",
+    sceneLabel: "مشهد تفاعلي للاعب",
+    scrollHint: "مرّر",
+  },
+  scene: {
+    loading: "جارٍ تجهيز المشهد",
+    loadingHint: "يتم تجهيز مشهد اللاعب…",
+    unsupportedTitle: "المشهد ثلاثي الأبعاد غير متاح",
+    unsupportedBody:
+      "تعذر تشغيل WebGL في هذا المتصفح، لذلك تم تعطيل المشهد التفاعلي. جميع المعلومات متاحة كنص.",
+    actionsLabel: "إجراءات المشهد",
+    actionsHelp: "بدائل نصية للنقاط التفاعلية داخل المشهد ثلاثي الأبعاد.",
+    journey: "مسيرتي",
+    playerProfile: "ملف اللاعب",
+    beyondCourt: "خارج الملعب",
+    trophy: "الكأس",
+    trophyNote: "عنصر زخرفي تجريبي — ليس سجل إنجاز",
+    medal: "الميدالية",
+    medalNote: "عنصر زخرفي تجريبي — ليس سجل إنجاز",
+    beyondTitle: "خارج الملعب",
+    beyondEmptyTitle: "لا يوجد محتوى منشور بعد",
+    beyondEmptyBody:
+      "لم تتم الموافقة على نشر محتوى شخصي في هذا القسم، ويبقى فارغًا حتى توفير مادة معتمدة.",
+    beyondClose: "إغلاق",
+    characterNote: "اللاعب ثلاثي الأبعاد شخصية تجريبية مبسطة وليست صورة حقيقية.",
+  },
+  profile: {
+    eyebrow: "الملف الشخصي",
+    title: "ملف اللاعب",
+    biographyLabel: "نبذة",
+    factsLabel: "بيانات اللاعب",
+    competitionsLabel: "سجلات البطولات",
+    nameLabel: "الاسم الكامل",
+    arabicLabel: "الاسم بالعربية",
+    professionalLabel: "مدرج أيضًا باسم",
+    nationalityLabel: "الجنسية",
+    positionLabel: "المركز",
+    dobLabel: "تاريخ الميلاد",
+    heightLabel: "الطول",
+    ageLabel: "العمر",
+    jerseyLabel: "رقم القميص",
+    sourcesLabel: "المصدر",
+    verified: "موثق",
+    ownerApproved: "معتمد من اللاعب",
+    scopeNote: "أرقام القمصان مدرجة حسب البطولة وليست رقمًا ثابتًا مدى المسيرة.",
+  },
+  career: {
+    eyebrow: "المسيرة",
+    title: "خط زمني للمسيرة",
+    emptyTitle: "لا توجد عناصر بعد",
+    emptyBody:
+      "تُعرض العناصر الموثقة فقط، ويضاف سجل الأندية والسجلات الأخرى بعد تأكيدها.",
+    categoryNational: "المنتخب",
+    categoryClub: "النادي",
+    categoryEducation: "التعليم",
+  },
+  achievements: {
+    eyebrow: "الإنجازات",
+    title: "الإنجازات",
+    filterAll: "الكل",
+    filterInternational: "دولية",
+    filterClub: "أندية",
+    filterIndividual: "إنجازات فردية",
+    emptyTitle: "لا يوجد محتوى موثق في هذا القسم",
+    emptyBody:
+      "لا توجد سجلات موثقة هنا بعد، ولا تُنشر الألقاب والميداليات والإنجازات الفردية إلا بعد التحقق منها.",
+    disclaimer:
+      "الكأس والميدالية في المشهد ثلاثي الأبعاد عناصر زخرفية تجريبية ولا تمثل إنجازات.",
+  },
+  media: {
+    eyebrow: "الصور",
+    title: "معرض الصور",
+    emptyTitle: "لا توجد صور منشورة بعد",
+    emptyBody:
+      "ستظهر هنا الصور المعتمدة وروابط الفيديو، ولا تُعرض أي صور بديلة.",
+    slotLabel: "مكان محجوز للمحتوى المعتمد",
+  },
+  contact: {
+    eyebrow: "تواصل",
+    title: "تواصل معي",
+    intro: "للاستفسارات المتعلقة باللاعب أحمد سعيد شفيق من الكشافة أو الأندية أو الإعلام.",
+    nameLabel: "الاسم",
+    emailLabel: "البريد الإلكتروني",
+    categoryLabel: "نوع الاستفسار",
+    categoryPlaceholder: "اختر التصنيف",
+    messageLabel: "الرسالة",
+    messageHint: "لا تتضمن معلومات شخصية حساسة.",
+    submit: "إرسال الاستفسار",
+    submitDisabled: "الإرسال غير متاح",
+    unavailableTitle: "النموذج غير متصل بعد",
+    unavailableBody:
+      "لم يتم إعداد خدمة بريد إلكتروني لهذا الموقع، لذلك لا يمكن إرسال النموذج، ولا يتم إرسال أو تخزين أي بيانات.",
+    errorRequired: "هذا الحقل مطلوب.",
+    errorEmail: "أدخل بريدًا إلكترونيًا صحيحًا.",
+    errorCategory: "اختر تصنيف الاستفسار.",
+    errorTooLong: "الرسالة طويلة جدًا.",
+  },
+  footer: {
+    rights: "الملف الشخصي",
+    disclaimer: "معلومات موثقة فقط، ولا تُعرض سجلات أو إحصائيات أو إنجازات غير موثقة.",
+    modelNote: "اللاعب ثلاثي الأبعاد شخصية تجريبية في انتظار نموذج حقيقي.",
+  },
+};
+
+export const dictionaries: Record<Locale, Dictionary> = { en, ar };
+
+/** Reads a localized field from a content record. */
+export const pick = <T extends Record<Locale, string>>(
+  value: T,
+  locale: Locale,
+): string => value[locale];
+
+export const dictionaryFor = (locale: Locale): Dictionary => dictionaries[locale];
