@@ -5,11 +5,13 @@ import { useCallback, useState } from "react";
 import type { Locale } from "@/content/types";
 import { heroFacts } from "@/content/profile";
 import { dictionaryFor, pick } from "@/i18n/dictionary";
-import { SECTION_IDS, sceneTargetToSection, type SceneTarget } from "@/lib/sections";
+import { SECTION_IDS, type SceneTarget } from "@/lib/sections";
 import { cn } from "@/lib/cn";
 import { usePrefersReducedMotion } from "@/lib/media";
+import { focusSection } from "@/lib/utils";
 import { SceneLoading } from "@/components/scene/SceneStatus";
-import { BeyondCourtPanel } from "@/components/scene/SceneInteractions";
+import { ScenePanel, type PanelId } from "@/components/scene/ScenePanels";
+import { useExclusivePanel } from "@/components/scene/SceneDialog";
 
 const SceneStage = dynamic(
   () => import("@/components/scene/SceneStage").then((mod) => mod.SceneStage),
@@ -18,7 +20,7 @@ const SceneStage = dynamic(
     loading: () => (
       <div className="overflow-hidden rounded-3xl border border-charcoal-line">
         <SceneLoading
-          title={dictionaryFor("en").scene.loading}
+          title={dictionaryFor("en").scene.panelLoading}
           hint={dictionaryFor("en").scene.loadingHint}
           className="h-[32rem] rounded-none border-0"
         />
@@ -30,35 +32,28 @@ const SceneStage = dynamic(
 export function Hero({ locale }: { locale: Locale }) {
   const t = dictionaryFor(locale);
   const reducedMotion = usePrefersReducedMotion();
-  const [panelOpen, setPanelOpen] = useState(false);
+  const panel = useExclusivePanel<PanelId>();
+  const [highlighted, setHighlighted] = useState<SceneTarget["kind"] | null>(null);
 
   const goTo = useCallback(
     (sectionId: string) => {
-      const element = document.getElementById(sectionId);
-      if (!element) return;
-      element.scrollIntoView({
-        behavior: reducedMotion ? "auto" : "smooth",
-        block: "start",
-      });
-      if (!element.hasAttribute("tabindex")) element.setAttribute("tabindex", "-1");
-      window.setTimeout(
-        () => element.focus({ preventScroll: true }),
-        reducedMotion ? 0 : 420,
-      );
+      focusSection(sectionId, reducedMotion);
     },
     [reducedMotion],
   );
 
+  /**
+   * Every hotspot opens its panel rather than jumping straight to a section.
+   *
+   * The panels are the richer reading experience and each one links onward to its
+   * full section, so nothing is only one interaction deep.
+   */
   const handleSceneSelect = useCallback(
     (target: SceneTarget) => {
-      const section = sceneTargetToSection[target.kind];
-      if (target.kind === "beyond") {
-        setPanelOpen(true);
-        return;
-      }
-      if (section) goTo(section);
+      panel.toggle(target.kind);
+      setHighlighted(null);
     },
-    [goTo],
+    [panel],
   );
 
   const sceneLabels = {
@@ -81,6 +76,10 @@ export function Hero({ locale }: { locale: Locale }) {
 
       <div className="mx-auto grid w-full max-w-[88rem] gap-14 px-5 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16 lg:px-12">
         {/* ------------------------------------------------------------- copy */}
+        {/*
+          The copy column comes first in the DOM, so on mobile the headline sits
+          above the scene and the composition reads top to bottom.
+        */}
         <div className="flex flex-col gap-8">
           <p className="eyebrow flex items-center gap-3">
             <span
@@ -103,17 +102,20 @@ export function Hero({ locale }: { locale: Locale }) {
             <button
               type="button"
               onClick={() => goTo(SECTION_IDS.career)}
-              className="group inline-flex items-center gap-3 rounded-full bg-egypt-red px-7 py-3.5 text-sm font-semibold text-bone shadow-glow-red transition-transform hover:-translate-y-0.5"
+              className="group inline-flex min-h-11 items-center gap-3 rounded-full bg-egypt-red px-7 py-3.5 text-sm font-semibold text-bone shadow-glow-red transition-transform hover:-translate-y-0.5"
             >
               {t.hero.exploreStory}
-              <span aria-hidden="true" className="transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1">
+              <span
+                aria-hidden="true"
+                className="transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1"
+              >
                 →
               </span>
             </button>
             <button
               type="button"
               onClick={() => goTo(SECTION_IDS.achievements)}
-              className="inline-flex items-center gap-3 rounded-full border border-charcoal-line px-7 py-3.5 text-sm font-semibold text-bone transition-colors hover:border-gold hover:text-gold"
+              className="inline-flex min-h-11 items-center gap-3 rounded-full border border-charcoal-line px-7 py-3.5 text-sm font-semibold text-bone transition-colors hover:border-gold hover:text-gold"
             >
               {t.hero.viewAchievements}
             </button>
@@ -147,6 +149,9 @@ export function Hero({ locale }: { locale: Locale }) {
             locale={locale}
             labels={sceneLabels}
             onSelect={handleSceneSelect}
+            highlighted={highlighted}
+            onHighlight={setHighlighted}
+            openPanel={panel.open}
             loadingTitle={t.scene.loading}
             loadingHint={t.scene.loadingHint}
             unsupportedTitle={t.scene.unsupportedTitle}
@@ -159,9 +164,10 @@ export function Hero({ locale }: { locale: Locale }) {
         </div>
       </div>
 
-      <BeyondCourtPanel
-        open={panelOpen}
-        onClose={() => setPanelOpen(false)}
+      <ScenePanel
+        panel={panel.open}
+        onClose={panel.close}
+        onGoToSection={goTo}
         locale={locale}
       />
     </section>

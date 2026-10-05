@@ -61,7 +61,7 @@ export const profile: ProfileContent = {
   ],
   biography: {
     en: "Ahmed Said Shafik, born 7 December 1994, is an Egyptian volleyball outside hitter listed at 190 cm and also listed professionally as Ahmed Shafik. Ahmed was listed for Egypt at the 2025 FIVB Men's World Championship, where that competition's roster records him wearing jersey number 18. This page is limited to confirmed public information: club history, statistics and honours are added only once they are verified.",
-    ar: "أحمد سعيد شفيق، المولود في ٧ ديسمبر ١٩٩٤، لاعب كرة يد مصري في مركز المضرب الخارجي، طوله ١٩٠ سم، ومدرج أيضًا باسم أحمد شفيق. وقد تم إدراجه في قائمة منتخب مصر لبطولة العالم ٢٠٢٥، حيث تسجل القائمة الرقم ١٨ لهذه البطولة. تقتصر هذه الصفحة على المعلومات العامة المؤكدة، ويضاف سجل الأندية والإحصائيات والألقاب بعد التحقق منها.",
+    ar: "أحمد سعيد شفيق، المولود في ٧ ديسمبر ١٩٩٤، لاعب كرة طائرة مصري في مركز المضرب الخارجي، طوله ١٩٠ سم، ومدرج أيضًا باسم أحمد شفيق. وقد تم إدراجه في قائمة منتخب مصر لبطولة العالم ٢٠٢٥، حيث تسجل القائمة الرقم ١٨ لهذه البطولة. تقتصر هذه الصفحة على المعلومات العامة المؤكدة، ويضاف سجل الأندية والإحصائيات والألقاب بعد التحقق منها.",
   },
   sources: [VOLLEYBALL_WORLD_PLAYER_SOURCE],
 };

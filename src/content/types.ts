@@ -1,9 +1,9 @@
 /**
  * Shared content types for the portfolio.
  *
- * Editorial rule for stage one: a record is only rendered publicly when its
- * `verification` status is `verified` or `owner-approved`. Anything else is
- * compiled out of the public UI (see `isPubliclyRenderable`).
+ * Editorial rule (unchanged since stage one): a record is only rendered publicly
+ * when its `verification` status is `verified` or `owner-approved`. Anything
+ * else is compiled out of the public UI (see `isPubliclyRenderable`).
  */
 
 export type Locale = "en" | "ar";
@@ -37,7 +37,7 @@ export interface VerifiedRecord {
 export const isPubliclyRenderable = (record: VerifiedRecord): boolean =>
   record.verification === "verified" || record.verification === "owner-approved";
 
-/** Accent/emphasis level used for small inline facts. */
+/** Accent/emphasis level used by small inline facts. */
 export type FactTone = "red" | "gold" | "neutral";
 
 export interface FactItem {
@@ -46,4 +46,35 @@ export interface FactItem {
   /** Localized on purpose: a bare string here would leak English into Arabic mode. */
   value: LocalizedText;
   tone?: FactTone;
+}
+
+/**
+ * What kind of record an achievement entry actually is.
+ *
+ * This exists so a tournament selection can never be presented as a title, and
+ * so the scene's decorative trophy and medal cannot imply either. Only the type
+ * the record can actually support is published.
+ */
+export type AchievementRecordType =
+  /** Selected for / took part in a competition. Never a win. */
+  | "appearance"
+  /** A championship title. */
+  | "title"
+  /** A medal at a competition. */
+  | "medal"
+  /** An individual award. */
+  | "award";
+
+/**
+ * Personal ("beyond the court") material.
+ *
+ * Deliberately allowed to be published only when the player or his management
+ * approved it, which is why it carries the same verification gate as factual
+ * records.
+ */
+export interface BeyondEntry extends VerifiedRecord {
+  id: string;
+  title: LocalizedText;
+  body: LocalizedText;
+  sources: SourceRef[];
 }

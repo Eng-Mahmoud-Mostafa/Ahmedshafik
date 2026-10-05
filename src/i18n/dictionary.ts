@@ -59,6 +59,32 @@ export const en = {
     beyondClose: "Close",
     characterNote:
       "The 3D athlete is a stylised placeholder, not a likeness of Ahmed Said Shafik.",
+    panelJourneyTitle: "My Journey",
+    panelJourneyEmptyTitle: "No verified career entries yet",
+    panelJourneyEmptyBody:
+      "Only verified entries appear here. Club history is added once it is confirmed.",
+    panelProfileTitle: "Player Profile",
+    panelProfileEmptyTitle: "No confirmed player information yet",
+    panelProfileEmptyBody:
+      "Confirmed details will appear here as soon as they are verified against a public source.",
+    panelClubTitle: "Club Achievements",
+    panelClubEmptyTitle: "No verified club records yet",
+    panelClubEmptyBody:
+      "No club title, medal or honour has been verified, so none is listed. The trophy in the scene is decorative set dressing and does not represent an award.",
+    panelInternationalTitle: "International Career",
+    panelInternationalEmptyTitle: "No verified international records yet",
+    panelInternationalEmptyBody:
+      "No international title or medal has been verified. The medal in the scene is decorative set dressing and does not represent an award.",
+    panelAppearancesLabel: "Tournament appearances",
+    panelTitlesLabel: "Titles",
+    panelMedalsLabel: "Medals",
+    panelAwardsLabel: "Individual awards",
+    panelNoneVerified: "None verified",
+    panelAppearancesNote:
+      "An appearance means he was selected for or listed in a squad. It is not a win.",
+    panelViewSection: "View the full section",
+    panelClose: "Close",
+    panelLoading: "Building the 3D scene",
   },
   profile: {
     eyebrow: "Profile",
@@ -146,9 +172,9 @@ export type Dictionary = typeof en;
 
 export const ar: Dictionary = {
   meta: {
-    title: "أحمد سعيد شفيق — لاعب كرة يد مصري",
+    title: "أحمد سعيد شفيق — لاعب كرة طائرة مصري",
     description:
-      "الملف الرسمي للاعب أحمد سعيد شفيق، لاعب مصري في مركز المضرب الخارجي، مواليد ٧ ديسمبر ١٩٩٤، الطول ١٩٠ سم.",
+      "الملف الرسمي للاعب أحمد سعيد شفيق، لاعب كرة طائرة مصري في مركز المضرب الخارجي، مواليد ٧ ديسمبر ١٩٩٤، الطول ١٩٠ سم.",
   },
   nav: {
     profile: "الملف الشخصي",
@@ -195,6 +221,32 @@ export const ar: Dictionary = {
       "لم تتم الموافقة على نشر محتوى شخصي في هذا القسم، ويبقى فارغًا حتى توفير مادة معتمدة.",
     beyondClose: "إغلاق",
     characterNote: "اللاعب ثلاثي الأبعاد شخصية تجريبية مبسطة وليست صورة حقيقية.",
+    panelJourneyTitle: "مسيرتي",
+    panelJourneyEmptyTitle: "لا توجد سجلات مسيرة موثقة بعد",
+    panelJourneyEmptyBody:
+      "تظهر هنا السجلات الموثقة فقط، ويضاف سجل الأندية بعد التأكد منه.",
+    panelProfileTitle: "ملف اللاعب",
+    panelProfileEmptyTitle: "لا توجد بيانات لاعب مؤكدة بعد",
+    panelProfileEmptyBody:
+      "ستظهر البيانات المؤكدة هنا فور التحقق منها مقابل مصدر عام.",
+    panelClubTitle: "إنجازات الأندية",
+    panelClubEmptyTitle: "لا توجد سجلات أندية موثقة بعد",
+    panelClubEmptyBody:
+      "لم يتم التحقق من أي لقب أو ميدالية أو شرف نادٍ، لذلك لا يُدرج أي منها. الكأس في المشهد عنصر زخرفي ولا يمثل إنجازًا.",
+    panelInternationalTitle: "المسيرة الدولية",
+    panelInternationalEmptyTitle: "لا توجد سجلات دولية موثقة بعد",
+    panelInternationalEmptyBody:
+      "لم يتم التحقق من أي لقب أو ميدالية دولية. الميدالية في المشهد عنصر زخرفي ولا تمثل إنجازًا.",
+    panelAppearancesLabel: "المشاركات في البطولات",
+    panelTitlesLabel: "الألقاب",
+    panelMedalsLabel: "الميداليات",
+    panelAwardsLabel: "إنجازات فردية",
+    panelNoneVerified: "لا يوجد شيء موثق",
+    panelAppearancesNote:
+      "المشاركة تعني الاختيار ضمن قائمة أو التسجيل فيها، وليست فوزًا.",
+    panelViewSection: "عرض القسم كاملًا",
+    panelClose: "إغلاق",
+    panelLoading: "جارٍ تجهيز المشهد",
   },
   profile: {
     eyebrow: "الملف الشخصي",

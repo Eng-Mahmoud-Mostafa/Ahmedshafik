@@ -20,12 +20,17 @@
  * and `Volleyball`, after the `-1.25` world offset is applied, and including
  * the cloud puff reach plus the trophy and medal hit radii so their hover
  * targets are not cut in half.
+ *
+ * The vertical extent is the tallest thing in the scene, which is the centre
+ * thought cloud at local y 2.42 plus its 0.23 m puff reach, and the lowest is the
+ * ball on the court. The horizontal extent is set by the two side clouds and the
+ * set pieces above the hands, which are wider than the figure.
  */
 export const SCENE_CONTENT_BOUNDS = {
-  minX: -0.79,
-  maxX: 0.81,
-  minY: -1.37,
-  maxY: 1.21,
+  minX: -0.8,
+  maxX: 0.82,
+  minY: -1.32,
+  maxY: 1.4,
 } as const;
 
 /**

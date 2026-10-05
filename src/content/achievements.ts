@@ -1,4 +1,10 @@
-import type { LocalizedText, SourceRef, VerificationStatus } from "./types.ts";
+import type {
+  AchievementRecordType,
+  LocalizedText,
+  SourceRef,
+  VerificationStatus,
+} from "./types.ts";
+import { VOLLEYBALL_WORLD_PLAYER_SOURCE } from "./profile.ts";
 
 export type AchievementCategory = "club" | "international" | "individual";
 
@@ -16,12 +22,19 @@ export interface AchievementEntry {
   context: LocalizedText;
   year: number;
   category: AchievementCategory;
+  /**
+   * Whether this is a tournament appearance or an actual honour.
+   *
+   * Required rather than optional: a record that does not state which it is must
+   * not be rendered, because the alternative is a selection being read as a win.
+   */
+  recordType: AchievementRecordType;
   verification: VerificationStatus;
   sources: SourceRef[];
 }
 
 /**
- * Stage one publishes squad-selection records only.
+ * Stage two still publishes squad-selection records only.
  *
  * These are the confirmed public facts. No titles, medals, club honours or
  * individual awards are listed, because none have been verified yet, and the
@@ -40,12 +53,34 @@ export const achievements: AchievementEntry[] = [
     },
     year: 2025,
     category: "international",
+    recordType: "appearance",
     verification: "verified",
-    sources: [
-      {
-        label: "Volleyball World — Men's World Championship player profile",
-        url: "https://en.volleyballworld.com/volleyball/competitions/men-world-championship/players/143887",
-      },
-    ],
+    sources: [VOLLEYBALL_WORLD_PLAYER_SOURCE],
   },
 ];
+
+/** Record types grouped for the scene panels, which must not blur them together. */
+export interface AchievementGroups {
+  appearances: AchievementEntry[];
+  titles: AchievementEntry[];
+  medals: AchievementEntry[];
+  awards: AchievementEntry[];
+}
+
+/**
+ * Splits published records by what they actually are.
+ *
+ * A group being empty is a fact the UI states plainly rather than papering over,
+ * so no panel can imply a title or a medal that does not exist.
+ */
+export const groupAchievements = (entries: AchievementEntry[]): AchievementGroups => {
+  const byType = (type: AchievementRecordType): AchievementEntry[] =>
+    entries.filter((entry) => entry.recordType === type);
+
+  return {
+    appearances: byType("appearance"),
+    titles: byType("title"),
+    medals: byType("medal"),
+    awards: byType("award"),
+  };
+};

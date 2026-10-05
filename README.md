@@ -1,4 +1,4 @@
-# Ahmed Said Shafik — Portfolio (Stage One)
+# Ahmed Said Shafik — Portfolio (Stage Two)
 
 Cinematic athlete portfolio for **Ahmed Said Shafik — أحمد سعيد شفيق**, Egyptian
 international outside hitter. Next.js App Router + TypeScript + Tailwind CSS +
@@ -17,7 +17,7 @@ Production checks:
 ```bash
 npm run typecheck            # tsc --noEmit
 npm run lint                 # eslint
-npm test                     # node --test (content invariants)
+npm test                     # node --test (content + composition invariants)
 npm run build                # next build
 npm start                    # serve the production build
 ```
@@ -33,9 +33,11 @@ All site copy lives in typed files under `src/content/`:
 | `types.ts`          | Shared types + `isPubliclyRenderable()` gate     |
 | `profile.ts`        | Identity, biography, competition records, age calc |
 | `career.ts`         | Career timeline entries                         |
-| `achievements.ts`   | Achievement records                             |
+| `achievements.ts`   | Achievement records, grouped by club / international |
+| `beyond.ts`         | Beyond-the-court entries (empty until approved)  |
 | `media.ts`          | Gallery items (empty in stage one)              |
 | `contact.ts`        | Inquiry categories + delivery configuration     |
+| `panels.ts`         | Read-only selectors the 3D panels render from    |
 
 **Editorial rule.** Every factual record carries a `verification` status and a
 `sources` list. Only `verified` and `owner-approved` records are rendered;
@@ -43,7 +45,16 @@ All site copy lives in typed files under `src/content/`:
 number 18 is labelled with the competition it belongs to (2025 FIVB Men's World
 Championship), never as a career-long number.
 
-Source of truth for the stage-one facts:
+**Appearance vs honour.** Every achievement record carries a `recordType` of
+`appearance` | `title` | `medal` | `award`. A squad selection is an
+`appearance` and can never render as a win, and `groupAchievements()` keeps
+appearance-only groups separate from groups that contain honours. Groups with
+nothing verified state that plainly instead of rendering an empty list.
+
+`beyondEntries` is deliberately an empty array. That is the correct published
+state, not a placeholder: the panel says so in both languages.
+
+Source of truth for the verified facts:
 <https://en.volleyballworld.com/volleyball/competitions/men-world-championship/players/143887>
 
 ## Internationalisation
@@ -59,41 +70,79 @@ Source of truth for the stage-one facts:
 ## 3D scene
 
 The hero scene is built with React Three Fiber and Drei. It contains a stylised
-placeholder athlete in a red kit, a volleyball, a dark marked court, stadium
-lighting with restrained red rim light, three translucent thought clouds, and a
-gold trophy and medal.
+placeholder athlete in a red kit, a volleyball, a marked court with a background
+net, stadium lighting with restrained red rim light and contact shadows, three
+translucent thought clouds above the athlete, and a gold trophy and medal above
+the hands.
 
 - `src/components/scene/AthleteScene.tsx` — canvas, lighting, assembly.
 - `src/components/scene/PlaceholderAthlete.tsx` — the temporary athlete.
 - `src/components/scene/AthleteModel.tsx` — **replaceable** model slot.
-- `src/components/scene/SceneStage.tsx` — WebGL detection, loading and fallback.
-- `src/components/scene/SceneInteractions.tsx` — the "Beyond the Court" panel and
-  the accessible HTML equivalents of every scene hotspot.
+- `src/components/scene/SceneStage.tsx` — WebGL detection, loading, fallback,
+  offscreen pause.
+- `src/components/scene/SceneDialog.tsx` — panel chrome: header, close button,
+  scrolling body, footer, focus trap and restoration.
+- `src/components/scene/ScenePanels.tsx` — the five panel bodies.
+- `src/components/scene/SceneInteractions.tsx` — accessible HTML equivalents of
+  every scene hotspot.
+- `src/components/scene/config.ts` — set-piece positions, colours, bounds.
+- `src/components/scene/framing.ts` — camera solve for the current aspect.
 
 **The 3D athlete is a stylised placeholder, not a likeness of Ahmed.**
+
+### Composition is asserted, not eyeballed
+
+`tests/composition.test.ts` projects every scene feature through the same camera
+solve the app uses and fails the build if, at aspect ratios 4/5, 3/4, 1 and 16/9,
+any feature leaves the frame, the clouds overlap the head, a cloud runs off the
+side, a set piece sinks below the hands, or the ball escapes the bottom edge.
+Cloud separation is measured against the clouds' own projected width rather than
+a fixed percentage, so the check stays meaningful on wide aspects.
+
+`SCENE_CONTENT_BOUNDS` in `framing.ts` is the declared extent the solve fits. Do
+not remove it — it is the contract the tests assert against.
 
 ### Adding a real model later
 
 Set `NEXT_PUBLIC_ATHLETE_MODEL_URL` to an absolute GLB URL. With it set, the GLB
 replaces the placeholder; with it unset, the placeholder renders and **no
 request for a model file is made**, so a missing asset can never 404. A model
-that fails to load falls back to the placeholder rather than a blank canvas.
+that fails to load falls back to the placeholder rather than a blank canvas. A
+supplied model is normalised to roughly 1.83 m standing on y = 0 so it composes
+with the set pieces.
 
 ### Scene interactions
 
-| Hotspot            | Result                                     |
-| ------------------ | ------------------------------------------ |
-| My Journey         | scrolls to Career                          |
-| Player Profile     | scrolls to Profile                         |
-| Beyond the Court   | opens a panel with an empty state           |
-| Trophy             | scrolls to Achievements                    |
-| Medal              | scrolls to the 2025 international entry    |
+| Hotspot            | Panel                   | Footer link      |
+| ------------------ | ----------------------- | ---------------- |
+| My Journey         | verified career timeline | `#career`        |
+| Player Profile     | confirmed facts + facts strip | `#profile`  |
+| Beyond the Court   | empty state             | `#beyond`        |
+| Trophy             | Club Achievements       | `#achievements`  |
+| Medal              | International Career    | `#career`        |
+
+Every hotspot opens its own panel, and `useExclusivePanel` guarantees only one is
+open at a time. Each panel's footer link closes the panel, scrolls to the full
+section and moves focus to it.
 
 All five are mirrored as real HTML buttons under the canvas, so the scene is
-fully usable without WebGL, with a keyboard, and with a screen reader.
+fully usable without WebGL, with a keyboard, and with a screen reader. If WebGL
+cannot start, a designed fallback explains why and the five buttons — with all
+their content — still work.
 
-The trophy and medal are decorative set dressing and are labelled as such —
-they do not represent awards.
+The trophy and medal are decorative set dressing and are labelled as such in
+both languages; the panels they open state that no title or medal has been
+verified.
+
+### Entrance and motion
+
+The entrance runs court + lighting → athlete → clouds → trophy/medal, driven by
+wall-clock `setTimeout` in `entrance.ts` / `useEntranceSequence.ts` — the pure
+module holds the timing and visibility maths so the tests never import React.
+`prefers-reduced-motion` resolves the whole sequence to `settled` immediately.
+Pointer depth on desktop is a damped 0.13-unit parallax, disabled for reduced
+motion, low-power viewports and paused frames. The scene pauses rendering when
+it leaves the viewport (`frameloop="never"` via IntersectionObserver).
 
 ### Accessibility and performance
 
@@ -103,6 +152,8 @@ they do not represent awards.
   simpler geometry.
 - Static loading placeholder and a designed WebGL fallback.
 - The canvas is `aria-hidden`; its content is available as HTML.
+- Panels trap Tab, close on Escape, and restore focus to the control that opened
+  them. The close button is a 44px target in both languages.
 
 ## Contact form
 
@@ -111,7 +162,7 @@ message client-side. Submission is **unavailable until an email service is
 configured** — the button is disabled and the reason is stated. No success state
 is ever simulated.
 
-`src/app/api/contact/route.ts` is the endpoint slot for stage two; it answers
+`src/app/api/contact/route.ts` is the endpoint slot for stage three; it answers
 `503 delivery_not_configured` today. `resolveContactConfig()` in
 `src/content/contact.ts` reads `CONTACT_PROVIDER`, `CONTACT_API_KEY` and
 `CONTACT_TO_EMAIL` **server-side only**. No credential is ever exposed to the
@@ -121,7 +172,7 @@ browser, and nothing belongs in a `NEXT_PUBLIC_` variable.
 
 See `.env.example`. All are optional; the app runs without any of them.
 
-## Still needed for the next stage
+## Still needed for stage three
 
 - A GLB model of Ahmed (or approval to keep the placeholder).
 - Reference photographs and video links for the gallery.
