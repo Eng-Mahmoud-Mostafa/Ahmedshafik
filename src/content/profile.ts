@@ -56,8 +56,8 @@ export const profile: ProfileContent = {
     },
   ],
   biography: {
-    en: "Ahmed Said Shafik (Arabic: أحمد سعيد شفيق), born 7 December 1994, is an Egyptian volleyball outside hitter listed at 190 cm. He has represented Egypt since 2015 and is also registered internationally as Ahmed Shafik. His senior club career began at Al Ahly SC in the Egyptian league in 2015, and in the 2024/25 season he played for Al Swehly (Asswehly) in Libya, where he won the Men's African Volleyball Club Championship and was named the tournament's Most Valuable Player. In September 2025 he was part of the Egypt squad at the FIVB Men's World Championship and scored 18 points in their opening 3-1 win over Iran. With Egypt he also won the 2015 and 2023 Men's African Championships and was named Best Outside Hitter in the 2023 Dream Team, alongside a silver medal at the 2017 African Championship. Every club, competition and honour on this site is recorded with a source; nothing is published without one.",
-    ar: "أحمد سعيد شفيق، من مواليد ٧ ديسمبر ١٩٩٤، لاعب كرة طائرة مصري في مركز المضرب الخارجي، طوله ١٩٠ سم. يمثل منتخب مصر منذ عام ٢٠١٥، ويُسجَّل دوليًا أيضًا باسم أحمد شفيق. بدأ مسيرته مع الأندية في صفوف النادي الأهلي بالدوري المصري عام ٢٠١٥، ولعب في موسم ٢٠٢٤/٢٥ لصالح نادي السويحلي (أسويهلي) في ليبيا، حيث أحرز لقب بطولة إفريقيا للأندية للكرة الطائرة واختير أفضل لاعب في البطولة. وفي سبتمبر ٢٠٢٥ كان ضمن قائمة منتخب مصر في بطولة العالم للرجال وسجّل ١٨ نقطة في الفوز الافتتاحي على إيران ٣-١. كما أحرز مع المنتخب لقب بطولة إفريقيا للرجال عامي ٢٠١٥ و٢٠٢٣، واختير أفضل مضرب خارجي في التشكيلة المثالية عام ٢٠٢٣، إلى جانب الميدالية الفضية في بطولة إفريقيا ٢٠١٧. وتُدرج هنا كل معلومة عن الأندية والمشاركات والألقاب مع مصدرها، ولا يُنشر أي محتوى دون مصدر.",
+    en: "Ahmed Said Shafik (Arabic: أحمد سعيد شفيق), born 7 December 1994, is an Egyptian volleyball outside hitter listed at 190 cm. He has represented Egypt since 2015 and is also registered internationally as Ahmed Shafik. His senior club career began at Al Ahly SC in the Egyptian league in 2015, and in the 2024/25 season he played for Al Swehly (Asswehly) in Libya, where he won the Men's African Volleyball Club Championship and was named the tournament's Most Valuable Player. He joined Al-Ula in Saudi Arabia for the 2025/26 season. In September 2025 he was part of the Egypt squad at the FIVB Men's World Championship and scored 18 points in their opening 3-1 win over Iran. With Egypt he also won the 2015 and 2023 Men's African Championships and was named Best Outside Hitter in the 2023 Dream Team, alongside a silver medal at the 2017 African Championship. Every club, competition and honour on this site is recorded with a source; nothing is published without one.",
+    ar: "أحمد سعيد شفيق، من مواليد ٧ ديسمبر ١٩٩٤، لاعب كرة طائرة مصري في مركز المضرب الخارجي، طوله ١٩٠ سم. يمثل منتخب مصر منذ عام ٢٠١٥، ويُسجَّل دوليًا أيضًا باسم أحمد شفيق. بدأ مسيرته مع الأندية في صفوف النادي الأهلي بالدوري المصري عام ٢٠١٥، ولعب في موسم ٢٠٢٤/٢٥ لصالح نادي السويحلي (أسويهلي) في ليبيا، حيث أحرز لقب بطولة إفريقيا للأندية للكرة الطائرة واختير أفضل لاعب في البطولة، ثم انتقل إلى نادي العُلا في السعودية لموسم ٢٠٢٥/٢٦. وفي سبتمبر ٢٠٢٥ كان ضمن قائمة منتخب مصر في بطولة العالم للرجال وسجّل ١٨ نقطة في الفوز الافتتاحي على إيران ٣-١. كما أحرز مع المنتخب لقب بطولة إفريقيا للرجال عامي ٢٠١٥ و٢٠٢٣، واختير أفضل مضرب خارجي في التشكيلة المثالية عام ٢٠٢٣، إلى جانب الميدالية الفضية في بطولة إفريقيا ٢٠١٧. وتُدرج هنا كل معلومة عن الأندية والمشاركات والألقاب مع مصدرها، ولا يُنشر أي محتوى دون مصدر.",
   },
   sources: [VOLLEYBALL_WORLD_PLAYER_SOURCE],
 };
@@ -101,10 +101,10 @@ export const profileFacts: FactItem[] = [
   },
   {
     id: "club",
-    label: { en: "Most recent verified club", ar: "أحدث نادٍ موثّق" },
+    label: { en: "Current club", ar: "النادي الحالي" },
     value: {
-      en: "Al Swehly (Asswehly), Libya — 2024/25",
-      ar: "السويحلي (أسويهلي)، ليبيا — ٢٠٢٤/٢٥",
+      en: "Al-Ula, Saudi Arabia — 2025/26",
+      ar: "العُلا، السعودية — ٢٠٢٥/٢٦",
     },
     tone: "gold",
   },

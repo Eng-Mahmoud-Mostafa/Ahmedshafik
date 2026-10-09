@@ -67,7 +67,8 @@ Source of truth for the verified facts:
 
 - **Biography** (EN + AR) built only from sourced facts: born 7 December 1994,
   190 cm, Egyptian outside hitter; Al Ahly SC from 2015; the 2024/25 season at
-  Al Swehly (Asswehly) in Libya.
+  Al Swehly (Asswehly) in Libya; and Al-Ula (Saudi Arabia) from the 2025/26
+  season, confirmed by his management.
 - **Career timeline** with club and national-team filters, newest first.
 - **Achievements archive** in four groups. Club titles: the 2025 African Club
   Championship with Al Swehly, plus the 2024/25 Libyan league and cup. National
@@ -81,9 +82,6 @@ Source of truth for the verified facts:
 
 **Unpublished gaps** (documented in the data files, never rendered):
 
-- His **current club** for 2025/26 is unresolved. Volleybox lists a move to
-  Al-Ula (Saudi Arabia) while the same database still lists him in the Al Swehly
-  2025/26 squad. The conflict is recorded in `pendingCareerEntries` and withheld.
 - A verified sit-down **interview** has not been found, so none is published; the
   `interview` press kind exists for when one is.
 
@@ -210,5 +208,4 @@ See `.env.example`. All are optional; the app runs without any of them.
 - Photographs and video, cleared for use, for the gallery — the grid and
   accessible lightbox are built and activate as soon as `media.ts` is populated
   with `owner-approved` items that carry intrinsic `width`/`height`.
-- Official confirmation of his **current club** (the 2025/26 listing conflicts).
 - A contact email service plus the recipient address.

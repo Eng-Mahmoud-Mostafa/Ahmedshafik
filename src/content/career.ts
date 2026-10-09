@@ -39,6 +39,20 @@ export interface CareerEntry {
  */
 export const career: CareerEntry[] = [
   {
+    id: "al-ula-2025-26",
+    period: "2025.4",
+    periodLabel: { en: "2025/26", ar: "٢٠٢٥/٢٦" },
+    title: { en: "Al-Ula", ar: "العُلا" },
+    organisation: { en: "Saudi league", ar: "الدوري السعودي" },
+    detail: {
+      en: "Joined Al-Ula in Saudi Arabia for the 2025/26 season. Confirmed by the player's management; the move is also listed on Volleybox.",
+      ar: "انتقل إلى نادي العُلا في السعودية لموسم ٢٠٢٥/٢٦، وقد أكّده القائمون على اللاعب كما يرد الانتقال في موقع Volleybox.",
+    },
+    category: "club",
+    verification: "owner-approved",
+    sources: [VOLLEYBOX_PLAYER_SOURCE],
+  },
+  {
     id: "egypt-mwc-2025",
     period: "2025.3",
     periodLabel: { en: "2025", ar: "٢٠٢٥" },
@@ -221,25 +235,11 @@ export const career: CareerEntry[] = [
 /**
  * Rows that are intentionally not published yet.
  *
- * They exist so the shape of the timeline is obvious for whoever fills it in
- * next. `isPubliclyRenderable()` filters them out of the rendered page, so
- * nothing unverified can leak into the UI.
+ * `isPubliclyRenderable()` filters them out of the rendered page, so nothing
+ * unverified can leak into the UI. Add the shape of a record here while it is
+ * still being confirmed, then move it into `career` once it is verified or
+ * approved by the player.
  */
-export const pendingCareerEntries: CareerEntry[] = [
-  {
-    id: "club-al-ula-2025-26",
-    period: "2025.4",
-    periodLabel: { en: "2025/26", ar: "٢٠٢٥/٢٦" },
-    title: { en: "Al-Ula (Saudi Arabia)", ar: "العلا (السعودية)" },
-    organisation: { en: "Listed by a community database", ar: "بحسب قاعدة بيانات مجتمعية" },
-    detail: {
-      en: "A 2025/26 move to Al-Ula in Saudi Arabia is listed on Volleybox, but the same database's Al Swehly squad page still lists him for 2025/26. The two listings conflict and no official source confirms the move, so it is withheld until the club is confirmed.",
-      ar: "تدرج قاعدة بيانات Volleybox انتقالًا إلى نادي العلا في السعودية لموسم ٢٠٢٥/٢٦، لكن صفحة نادي السويحلي في القاعدة نفسها ما زالت تدرجه في الموسم ذاته. التدرجان متعارضان ولا يثبت الانتقال أي مصدر رسمي، لذلك يُحجب حتى تأكيد النادي.",
-    },
-    category: "club",
-    verification: "unverified",
-    sources: [VOLLEYBOX_PLAYER_SOURCE],
-  },
-];
+export const pendingCareerEntries: CareerEntry[] = [];
 
 export const careerCategories: CareerCategory[] = ["national", "club", "education"];
