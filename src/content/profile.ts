@@ -1,12 +1,8 @@
 import type { FactItem, Locale, LocalizedText, SourceRef } from "./types.ts";
+import { VOLLEYBALL_WORLD_PLAYER_SOURCE } from "./sources.ts";
 
 /** Date of birth, ISO format. Single source of truth for the age calculation. */
 export const DATE_OF_BIRTH_ISO = "1994-12-07";
-
-export const VOLLEYBALL_WORLD_PLAYER_SOURCE: SourceRef = {
-  label: "Volleyball World — FIVB Men's World Championship player profile",
-  url: "https://en.volleyballworld.com/volleyball/competitions/men-world-championship/players/143887",
-};
 
 export interface CompetitionEntry {
   id: string;
@@ -47,21 +43,21 @@ export const profile: ProfileContent = {
       id: "mwc-2025-egypt",
       competition: {
         en: "FIVB Men's World Championship 2025",
-        ar: "بطولة العالم男子 ٢٠٢٥",
+        ar: "بطولة العالم للرجال ٢٠٢٥",
       },
       year: 2025,
       team: { en: "Egypt", ar: "مصر" },
       jerseyNumber: 18,
       note: {
-        en: "Listed in the Egypt squad for the 2025 FIVB Men's World Championship, where the tournament roster records him wearing jersey number 18. The number applies to that competition roster.",
-        ar: "مدرج ضمن قائمة منتخب مصر في بطولة العالم男子 ٢٠٢٥، حيث تسجل قائمة اللاعبين الرقم ١٨ لهذه البطولة.",
+        en: "Played for Egypt at the 2025 FIVB Men's World Championship, where the tournament roster records him wearing jersey number 18. The number applies to that competition roster only.",
+        ar: "شارك مع منتخب مصر في بطولة العالم للرجال ٢٠٢٥، حيث تسجل قائمة اللاعبين الرقم ١٨ له. ويخص هذا الرقم قائمة هذه البطولة فقط.",
       },
       sources: [VOLLEYBALL_WORLD_PLAYER_SOURCE],
     },
   ],
   biography: {
-    en: "Ahmed Said Shafik, born 7 December 1994, is an Egyptian volleyball outside hitter listed at 190 cm and also listed professionally as Ahmed Shafik. Ahmed was listed for Egypt at the 2025 FIVB Men's World Championship, where that competition's roster records him wearing jersey number 18. This page is limited to confirmed public information: club history, statistics and honours are added only once they are verified.",
-    ar: "أحمد سعيد شفيق، المولود في ٧ ديسمبر ١٩٩٤، لاعب كرة طائرة مصري في مركز المضرب الخارجي، طوله ١٩٠ سم، ومدرج أيضًا باسم أحمد شفيق. وقد تم إدراجه في قائمة منتخب مصر لبطولة العالم ٢٠٢٥، حيث تسجل القائمة الرقم ١٨ لهذه البطولة. تقتصر هذه الصفحة على المعلومات العامة المؤكدة، ويضاف سجل الأندية والإحصائيات والألقاب بعد التحقق منها.",
+    en: "Ahmed Said Shafik (Arabic: أحمد سعيد شفيق), born 7 December 1994, is an Egyptian volleyball outside hitter listed at 190 cm. He has represented Egypt since 2015 and is also registered internationally as Ahmed Shafik. His senior club career began at Al Ahly SC in the Egyptian league in 2015, and in the 2024/25 season he played for Al Swehly (Asswehly) in Libya, where he won the Men's African Volleyball Club Championship and was named the tournament's Most Valuable Player. In September 2025 he was part of the Egypt squad at the FIVB Men's World Championship and scored 18 points in their opening 3-1 win over Iran. With Egypt he also won the 2015 and 2023 Men's African Championships and was named Best Outside Hitter in the 2023 Dream Team, alongside a silver medal at the 2017 African Championship. Every club, competition and honour on this site is recorded with a source; nothing is published without one.",
+    ar: "أحمد سعيد شفيق، من مواليد ٧ ديسمبر ١٩٩٤، لاعب كرة طائرة مصري في مركز المضرب الخارجي، طوله ١٩٠ سم. يمثل منتخب مصر منذ عام ٢٠١٥، ويُسجَّل دوليًا أيضًا باسم أحمد شفيق. بدأ مسيرته مع الأندية في صفوف النادي الأهلي بالدوري المصري عام ٢٠١٥، ولعب في موسم ٢٠٢٤/٢٥ لصالح نادي السويحلي (أسويهلي) في ليبيا، حيث أحرز لقب بطولة إفريقيا للأندية للكرة الطائرة واختير أفضل لاعب في البطولة. وفي سبتمبر ٢٠٢٥ كان ضمن قائمة منتخب مصر في بطولة العالم للرجال وسجّل ١٨ نقطة في الفوز الافتتاحي على إيران ٣-١. كما أحرز مع المنتخب لقب بطولة إفريقيا للرجال عامي ٢٠١٥ و٢٠٢٣، واختير أفضل مضرب خارجي في التشكيلة المثالية عام ٢٠٢٣، إلى جانب الميدالية الفضية في بطولة إفريقيا ٢٠١٧. وتُدرج هنا كل معلومة عن الأندية والمشاركات والألقاب مع مصدرها، ولا يُنشر أي محتوى دون مصدر.",
   },
   sources: [VOLLEYBALL_WORLD_PLAYER_SOURCE],
 };
@@ -104,10 +100,19 @@ export const profileFacts: FactItem[] = [
     tone: "neutral",
   },
   {
+    id: "club",
+    label: { en: "Most recent verified club", ar: "أحدث نادٍ موثّق" },
+    value: {
+      en: "Al Swehly (Asswehly), Libya — 2024/25",
+      ar: "السويحلي (أسويهلي)، ليبيا — ٢٠٢٤/٢٥",
+    },
+    tone: "gold",
+  },
+  {
     id: "name-ar",
     label: { en: "Name in Arabic", ar: "الاسم بالعربية" },
     value: { en: profile.nameArabic, ar: profile.nameArabic },
-    tone: "gold",
+    tone: "neutral",
   },
   {
     id: "professional-name",

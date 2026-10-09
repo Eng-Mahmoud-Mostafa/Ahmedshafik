@@ -64,12 +64,18 @@ export const clubAchievementsPanel = () => {
 
 /** "International Career" — opened by the medal. */
 export const internationalCareerPanel = () => {
+  const publishedAchievements = published(achievements);
   const groups = groupAchievements(
-    published(achievements).filter((entry) => entry.category === "international"),
+    publishedAchievements.filter((entry) => entry.category === "international"),
   );
 
   return {
     ...groups,
+    /**
+     * Individual awards are honours in their own right and are kept in their own
+     * group, so they are never folded into a title or a medal count.
+     */
+    awards: publishedAchievements.filter((entry) => entry.category === "individual"),
     nationalEntries: published(career).filter((entry) => entry.category === "national"),
     /** True while nothing that is actually a title or medal is verified. */
     honoursUnverified: groups.titles.length === 0 && groups.medals.length === 0,

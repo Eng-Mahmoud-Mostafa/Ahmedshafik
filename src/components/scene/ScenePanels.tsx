@@ -289,7 +289,8 @@ function ClubPanelBody({ locale }: { locale: Locale }) {
 
 function InternationalPanelBody({ locale }: { locale: Locale }) {
   const t = dictionaryFor(locale);
-  const { appearances, titles, medals, nationalEntries } = internationalCareerPanel();
+  const { appearances, titles, medals, awards, nationalEntries } =
+    internationalCareerPanel();
 
   const renderAppearance = (entry: AchievementEntry) => (
     <div className="rounded-xl border border-charcoal-line bg-charcoal/40 px-4 py-4">
@@ -357,6 +358,12 @@ function InternationalPanelBody({ locale }: { locale: Locale }) {
       <VerifiedGroup
         label={t.scene.panelMedalsLabel}
         entries={medals}
+        emptyLabel={t.scene.panelNoneVerified}
+        renderEntry={renderAppearance}
+      />
+      <VerifiedGroup
+        label={t.scene.panelAwardsLabel}
+        entries={awards}
         emptyLabel={t.scene.panelNoneVerified}
         renderEntry={renderAppearance}
       />

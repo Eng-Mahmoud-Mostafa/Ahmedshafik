@@ -1,4 +1,4 @@
-# Ahmed Said Shafik — Portfolio (Stage Two)
+# Ahmed Said Shafik — Portfolio (Stage Three)
 
 Cinematic athlete portfolio for **Ahmed Said Shafik — أحمد سعيد شفيق**, Egyptian
 international outside hitter. Next.js App Router + TypeScript + Tailwind CSS +
@@ -31,31 +31,61 @@ All site copy lives in typed files under `src/content/`:
 | File                | Purpose                                        |
 | ------------------- | ---------------------------------------------- |
 | `types.ts`          | Shared types + `isPubliclyRenderable()` gate     |
+| `sources.ts`        | Every public source, defined once, with publication/checked dates |
 | `profile.ts`        | Identity, biography, competition records, age calc |
-| `career.ts`         | Career timeline entries                         |
-| `achievements.ts`   | Achievement records, grouped by club / international |
+| `career.ts`         | Career timeline entries (club + national), newest first |
+| `achievements.ts`   | Verified archive + `groupAchievements()` / `archiveGroups()` |
+| `press.ts`          | Press coverage and official video highlight links |
 | `beyond.ts`         | Beyond-the-court entries (empty until approved)  |
-| `media.ts`          | Gallery items (empty in stage one)              |
+| `media.ts`          | Owner-supplied gallery items (empty until assets are supplied) |
 | `contact.ts`        | Inquiry categories + delivery configuration     |
 | `panels.ts`         | Read-only selectors the 3D panels render from    |
 
 **Editorial rule.** Every factual record carries a `verification` status and a
 `sources` list. Only `verified` and `owner-approved` records are rendered;
-`unverified` drafts stay in the data file but are filtered out of the UI. Jersey
-number 18 is labelled with the competition it belongs to (2025 FIVB Men's World
-Championship), never as a career-long number.
+`unverified` drafts stay in the data file but are filtered out of the UI. Each
+`SourceRef` records a `checkedISO` date, and a `publishedISO` date when the
+publisher states one. Jersey number 18 is labelled with the competition it
+belongs to (2025 FIVB Men's World Championship), never as a career-long number.
 
 **Appearance vs honour.** Every achievement record carries a `recordType` of
 `appearance` | `title` | `medal` | `award`. A squad selection is an
-`appearance` and can never render as a win, and `groupAchievements()` keeps
-appearance-only groups separate from groups that contain honours. Groups with
-nothing verified state that plainly instead of rendering an empty list.
+`appearance` and can never render as a win. `groupAchievements()` splits records
+by type for the scene panels; `archiveGroups()` partitions the public archive
+into the four groups the page shows — club titles, national-team results,
+individual awards and international appearances — with no record in two groups.
+A group with nothing verified states that plainly instead of rendering an empty
+list, and a test asserts the partition drops nothing and double-counts nothing.
 
 `beyondEntries` is deliberately an empty array. That is the correct published
 state, not a placeholder: the panel says so in both languages.
 
 Source of truth for the verified facts:
 <https://en.volleyballworld.com/volleyball/competitions/men-world-championship/players/143887>
+
+### What stage three publishes
+
+- **Biography** (EN + AR) built only from sourced facts: born 7 December 1994,
+  190 cm, Egyptian outside hitter; Al Ahly SC from 2015; the 2024/25 season at
+  Al Swehly (Asswehly) in Libya.
+- **Career timeline** with club and national-team filters, newest first.
+- **Achievements archive** in four groups. Club titles: the 2025 African Club
+  Championship with Al Swehly, plus the 2024/25 Libyan league and cup. National
+  results: African champions 2015 and 2023, silver 2017 and at the 2013 Islamic
+  Solidarity Games. Individual awards: 2025 African Club Championship MVP and
+  2023 Best Outside Hitter. International appearances: World Championships,
+  World Cup, World League, Challenger Cup and more.
+- **Press & highlights**: match reports and the official Iran–Egypt highlight
+  video, each linked to its original publisher. No article text or third-party
+  image is copied.
+
+**Unpublished gaps** (documented in the data files, never rendered):
+
+- His **current club** for 2025/26 is unresolved. Volleybox lists a move to
+  Al-Ula (Saudi Arabia) while the same database still lists him in the Al Swehly
+  2025/26 squad. The conflict is recorded in `pendingCareerEntries` and withheld.
+- A verified sit-down **interview** has not been found, so none is published; the
+  `interview` press kind exists for when one is.
 
 ## Internationalisation
 
@@ -131,8 +161,10 @@ cannot start, a designed fallback explains why and the five buttons — with all
 their content — still work.
 
 The trophy and medal are decorative set dressing and are labelled as such in
-both languages; the panels they open state that no title or medal has been
-verified.
+both languages. The panels they open now render the verified records — the
+trophy panel lists the club titles and the medal panel the national results,
+individual awards and international appearances — each in its own labelled
+group so an appearance is never read as a win.
 
 ### Entrance and motion
 
@@ -172,9 +204,11 @@ browser, and nothing belongs in a `NEXT_PUBLIC_` variable.
 
 See `.env.example`. All are optional; the app runs without any of them.
 
-## Still needed for stage three
+## Still needed from the owner
 
-- A GLB model of Ahmed (or approval to keep the placeholder).
-- Reference photographs and video links for the gallery.
-- Verified club history, statistics and achievements.
+- A GLB model of Ahmed (or approval to keep the stylised placeholder).
+- Photographs and video, cleared for use, for the gallery — the grid and
+  accessible lightbox are built and activate as soon as `media.ts` is populated
+  with `owner-approved` items that carry intrinsic `width`/`height`.
+- Official confirmation of his **current club** (the 2025/26 listing conflicts).
 - A contact email service plus the recipient address.

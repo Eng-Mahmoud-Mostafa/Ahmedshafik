@@ -26,3 +26,26 @@ export const formatNumber = (value: number, locale: Locale): string => {
   const digits = "٠١٢٣٤٥٦٧٨٩";
   return String(value).replace(/\d/g, (d) => digits[Number(d)] ?? d);
 };
+
+const MONTHS: Record<Locale, readonly string[]> = {
+  en: [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ],
+  ar: [
+    "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر",
+  ],
+};
+
+/**
+ * `2025-09-14` -> `14 September 2025` / `١٤ سبتمبر ٢٠٢٥`.
+ *
+ * Kept dependency-free so a date renders identically on the server and client
+ * without pulling an Intl bundle into the page.
+ */
+export const formatISODate = (iso: string, locale: Locale): string => {
+  const [year, month, day] = iso.split("-").map(Number);
+  if (!year || !month || !day || month < 1 || month > 12) return iso;
+  return `${formatNumber(day, locale)} ${MONTHS[locale][month - 1]} ${formatNumber(year, locale)}`;
+};

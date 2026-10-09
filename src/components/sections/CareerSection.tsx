@@ -1,3 +1,6 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import type { Locale } from "@/content/types";
 import { career, type CareerCategory } from "@/content/career";
 import { isPubliclyRenderable } from "@/content/types";
@@ -5,6 +8,7 @@ import { dictionaryFor, pick } from "@/i18n/dictionary";
 import { SECTION_IDS } from "@/lib/sections";
 import { SectionHeading, SectionShell } from "@/components/ui/Section";
 import { EmptyState, SourceList, VerificationBadge } from "@/components/ui/Primitives";
+import { cn } from "@/lib/cn";
 
 const CATEGORY_LABEL: Record<CareerCategory, { en: string; ar: string }> = {
   national: { en: "National team", ar: "المنتخب" },
@@ -12,9 +16,29 @@ const CATEGORY_LABEL: Record<CareerCategory, { en: string; ar: string }> = {
   education: { en: "Education", ar: "التعليم" },
 };
 
+type Filter = "all" | "club" | "national";
+
 export function CareerSection({ locale }: { locale: Locale }) {
   const t = dictionaryFor(locale);
-  const entries = career.filter(isPubliclyRenderable);
+  const [filter, setFilter] = useState<Filter>("all");
+
+  const entries = useMemo(
+    () =>
+      career
+        .filter(isPubliclyRenderable)
+        .slice()
+        .sort((a, b) => b.period.localeCompare(a.period)),
+    [],
+  );
+
+  const visible =
+    filter === "all" ? entries : entries.filter((entry) => entry.category === filter);
+
+  const filters: Array<{ id: Filter; label: string }> = [
+    { id: "all", label: t.career.filterAll },
+    { id: "club", label: t.career.filterClub },
+    { id: "national", label: t.career.filterNational },
+  ];
 
   return (
     <SectionShell id={SECTION_IDS.career} labelledBy="career-heading">
@@ -24,12 +48,40 @@ export function CareerSection({ locale }: { locale: Locale }) {
         title={t.career.title}
       />
 
-      <div className="mt-14">
-        {entries.length === 0 ? (
+      {entries.length > 0 ? (
+        <div
+          role="group"
+          aria-label={t.career.filterLabel}
+          className="mt-10 flex flex-wrap gap-2"
+        >
+          {filters.map((item) => {
+            const active = filter === item.id;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setFilter(item.id)}
+                aria-pressed={active}
+                className={cn(
+                  "min-h-11 rounded-full border px-4 text-xs font-semibold tracking-[0.14em] uppercase transition-colors rtl:tracking-normal",
+                  active
+                    ? "border-egypt-red bg-egypt-red/12 text-egypt-red-soft"
+                    : "border-charcoal-line text-bone-muted hover:border-bone-faint hover:text-bone",
+                )}
+              >
+                {item.label}
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+
+      <div className="mt-12" aria-live="polite">
+        {visible.length === 0 ? (
           <EmptyState title={t.career.emptyTitle} body={t.career.emptyBody} />
         ) : (
           <ol className="relative flex flex-col gap-8 border-s border-charcoal-line ps-6 sm:ps-10">
-            {entries.map((entry) => (
+            {visible.map((entry) => (
               <li key={entry.id} className="relative">
                 <span
                   aria-hidden="true"

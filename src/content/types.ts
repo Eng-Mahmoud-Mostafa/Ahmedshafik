@@ -26,6 +26,16 @@ export type VerificationStatus =
 export interface SourceRef {
   label: string;
   url: string;
+  /**
+   * Publication date of the source itself (ISO `YYYY-MM-DD`), when the
+   * publisher states one. Left undefined rather than guessed.
+   */
+  publishedISO?: string;
+  /**
+   * Date this source was last checked against the record it backs
+   * (ISO `YYYY-MM-DD`). Every published source carries one.
+   */
+  checkedISO?: string;
 }
 
 export interface VerifiedRecord {

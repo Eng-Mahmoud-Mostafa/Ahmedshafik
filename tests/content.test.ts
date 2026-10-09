@@ -11,6 +11,7 @@ import {
 } from "../src/content/profile.ts";
 import { career, pendingCareerEntries } from "../src/content/career.ts";
 import { achievements } from "../src/content/achievements.ts";
+import { press } from "../src/content/press.ts";
 import { media } from "../src/content/media.ts";
 import { isPubliclyRenderable } from "../src/content/types.ts";
 
@@ -108,4 +109,66 @@ test("the date-of-birth fact is localized, not pinned to the English label", () 
   assert.ok(dob);
   assert.deepEqual(dob.value, profile.dateOfBirthLabel);
   assert.equal(dob.value.ar, "٧ ديسمبر ١٩٩٤");
+});
+
+test("the archive covers every record type", () => {
+  const types = new Set(achievements.map((entry) => entry.recordType));
+  for (const type of ["title", "medal", "award", "appearance"] as const) {
+    assert.ok(types.has(type), `no achievement of type "${type}"`);
+  }
+});
+
+test("record ids are unique across the content collections", () => {
+  const ids = [...career, ...achievements, ...press].map((entry) => entry.id);
+  assert.equal(new Set(ids).size, ids.length, "duplicate record id");
+});
+
+test("every published source is https and records when it was checked", () => {
+  const records = [...career, ...achievements, ...press, profile];
+  for (const record of records) {
+    for (const source of record.sources) {
+      assert.match(source.url, /^https:\/\//, `non-https source: ${source.url}`);
+      assert.match(
+        source.checkedISO ?? "",
+        /^\d{4}-\d{2}-\d{2}$/,
+        `source without a checked date: ${source.url}`,
+      );
+    }
+  }
+});
+
+test("press entries are dated links to their original publisher", () => {
+  assert.ok(press.length > 0);
+  for (const entry of press) {
+    assert.ok(isPubliclyRenderable(entry), `press entry not renderable: ${entry.id}`);
+    assert.match(entry.url, /^https:\/\//, `press link is not https: ${entry.id}`);
+    assert.match(entry.dateISO, /^\d{4}-\d{2}-\d{2}$/, `press entry has no date: ${entry.id}`);
+    assert.ok(entry.outlet.trim().length > 0, `press entry has no outlet: ${entry.id}`);
+    assert.ok(entry.sources.length > 0, `press entry has no source: ${entry.id}`);
+  }
+});
+
+test("no localized copy leaks stray CJK characters", () => {
+  // Guards the stage-three regression where "Men's World Championship" was
+  // partly rendered with the Chinese word 男子.
+  const CJK = /[\u3000-\u303f\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef]/;
+
+  const collect = (value: unknown): string[] => {
+    if (typeof value === "string") return [value];
+    if (Array.isArray(value)) return value.flatMap(collect);
+    if (value && typeof value === "object") return Object.values(value).flatMap(collect);
+    return [];
+  };
+
+  const strings = collect({
+    career,
+    achievements,
+    press,
+    biography: profile.biography,
+    facts: profileFacts,
+  });
+
+  for (const value of strings) {
+    assert.equal(CJK.test(value), false, `CJK characters found in: ${value}`);
+  }
 });

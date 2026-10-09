@@ -12,15 +12,24 @@ export interface MediaItem {
   /** Video links (e.g. a hosted match clip) go here. */
   href: string;
   alt: LocalizedText;
+  /**
+   * Intrinsic pixel dimensions, used to reserve the image's box before it loads
+   * so the page never reflows. Supplied alongside any real photograph.
+   */
+  width?: number;
+  height?: number;
   year?: number;
   verification: VerificationStatus;
   sources: SourceRef[];
 }
 
 /**
- * Stage one ships no invented media.
+ * Owner-supplied photographs and video.
  *
- * The gallery renders its designed empty state until player-approved photos or
- * video links are added here with a `verification` of `owner-approved`.
+ * Still intentionally empty: nothing has been supplied by the player or his
+ * management, and no third-party image is copied here. The gallery renders its
+ * designed empty state until real, owned assets are added with a `verification`
+ * of `owner-approved`. Press coverage and official video links live in
+ * `press.ts` instead, where they are linked to their original source.
  */
 export const media: MediaItem[] = [];

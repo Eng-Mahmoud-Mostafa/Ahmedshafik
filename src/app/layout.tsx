@@ -26,21 +26,25 @@ const arabic = Noto_Kufi_Arabic({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Ahmed Said Shafik — Egyptian Volleyball Outside Hitter",
-  description:
-    "Official portfolio of Ahmed Said Shafik (أحمد سعيد شفيق) — Egyptian international outside hitter, born 7 December 1994, 190 cm.",
-  metadataBase: new URL("https://ahmedshafik.vercel.app"),
-  openGraph: {
-    title: "Ahmed Said Shafik — Egyptian International Outside Hitter",
-    description:
-      "Official portfolio of Ahmed Said Shafik (أحمد سعيد شفيق) — Egyptian international outside hitter.",
-    type: "website",
-    locale: "en_US",
-    alternateLocale: "ar_EG",
-  },
-  robots: { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getRequestLocale();
+  const meta = dictionaryFor(locale).meta;
+
+  return {
+    title: meta.title,
+    description: meta.description,
+    // Placeholder host until the owner's Vercel project slug is confirmed.
+    metadataBase: new URL("https://ahmedshafik.vercel.app"),
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      type: "website",
+      locale: locale === "ar" ? "ar_EG" : "en_US",
+      alternateLocale: locale === "ar" ? "en_US" : "ar_EG",
+    },
+    robots: { index: true, follow: true },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#05060a",
