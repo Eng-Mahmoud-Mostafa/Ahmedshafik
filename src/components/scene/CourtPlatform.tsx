@@ -1,9 +1,14 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { SCENE_COLORS } from "./config";
-import { createCourtTexture, createGroundShadowTexture, createNetTexture } from "./textures";
+import {
+  createCourtTexture,
+  createGroundShadowTexture,
+  createNetTexture,
+  disposeTexture,
+} from "./textures";
 
 /**
  * Dark court platform with real volleyball markings, plus a soft baked contact
@@ -25,6 +30,16 @@ export function CourtPlatform({
   const { texture } = useMemo(() => createCourtTexture(quality), [quality]);
   const groundShadow = useMemo(() => createGroundShadowTexture(), []);
   const net = useMemo(() => createNetTexture(), []);
+
+  // The generated textures are not owned by R3F, so release them explicitly.
+  useEffect(
+    () => () => {
+      disposeTexture(texture);
+      disposeTexture(groundShadow);
+      disposeTexture(net);
+    },
+    [texture, groundShadow, net],
+  );
 
   return (
     <group>

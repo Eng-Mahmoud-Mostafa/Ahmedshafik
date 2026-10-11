@@ -11,7 +11,9 @@
   /* Warm white typography */
   --color-bone: #f6f2ea;
   --color-bone-muted: #b7b0a3;
-  --color-bone-faint: #7d776d;
+  /* Lightened from #7d776d so small tracked labels clear WCAG AA (4.5:1) on
+     ink-soft (#0a0c11) and charcoal (#11141b), not only on the darkest ink. */
+  --color-bone-faint: #948d82;
 
   /* Egyptian red */
   --color-egypt-red: #ce1126;

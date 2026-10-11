@@ -57,7 +57,9 @@ export function SceneStage({
   const lowPower = useIsMobileViewport();
   const stage = useEntranceSequence(reducedMotion);
   const containerRef = useRef<HTMLDivElement>(null);
-  const paused = useOffscreen(containerRef);
+  const offscreen = useOffscreen(containerRef);
+  const hidden = useDocumentHidden();
+  const paused = offscreen || hidden;
 
   return (
     <div className={className} ref={containerRef}>
@@ -148,4 +150,27 @@ function useOffscreen(ref: RefObject<HTMLDivElement | null>): boolean {
   }, [ref]);
 
   return offscreen;
+}
+
+/**
+ * True while the browser tab is hidden.
+ *
+ * Combined with the off-screen check above, a backgrounded tab stops rendering
+ * entirely instead of animating a scene nobody can see — which is the single
+ * biggest avoidable battery and CPU cost on mobile. The listener is removed on
+ * unmount, and a missing `visibilitychange` simply leaves the scene running.
+ */
+function useDocumentHidden(): boolean {
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const update = () => setHidden(document.visibilityState === "hidden");
+    update();
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+
+  return hidden;
 }

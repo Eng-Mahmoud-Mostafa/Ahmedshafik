@@ -4,6 +4,12 @@ import "./globals.css";
 import { LocaleProvider } from "@/i18n/LocaleProvider";
 import { getHtmlLang, getRequestLocale } from "@/i18n/server";
 import { dictionaryFor } from "@/i18n/dictionary";
+import { isProductionDeployment } from "@/lib/deployment";
+import {
+  buildPersonStructuredData,
+  PRODUCTION_ORIGIN,
+  serializeStructuredData,
+} from "@/lib/structured-data";
 
 const display = Archivo({
   subsets: ["latin"],
@@ -28,21 +34,39 @@ const arabic = Noto_Kufi_Arabic({
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getRequestLocale();
-  const meta = dictionaryFor(locale).meta;
+  const t = dictionaryFor(locale);
+  const meta = t.meta;
+  const indexable = isProductionDeployment();
 
   return {
+    metadataBase: new URL(PRODUCTION_ORIGIN),
     title: meta.title,
     description: meta.description,
-    // Placeholder host until the owner's Vercel project slug is confirmed.
-    metadataBase: new URL("https://ahmedshafik.vercel.app"),
+    applicationName: "Ahmed Said Shafik",
+    authors: [{ name: "Ahmed Said Shafik" }],
+    creator: "Ahmed Said Shafik",
+    publisher: "Ahmed Said Shafik",
+    // Cookie-based routing means English and Arabic share one URL, so there is
+    // a single canonical and no hreflang alternates to declare.
+    alternates: { canonical: "/" },
     openGraph: {
+      type: "website",
+      url: "/",
+      siteName: "Ahmed Said Shafik",
       title: meta.title,
       description: meta.description,
-      type: "website",
       locale: locale === "ar" ? "ar_EG" : "en_US",
       alternateLocale: locale === "ar" ? "en_US" : "ar_EG",
     },
-    robots: { index: true, follow: true },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+    },
+    // Preview and development deployments are never indexed.
+    robots: indexable
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
   };
 }
 
@@ -58,6 +82,10 @@ export default async function RootLayout({
 }) {
   const locale = await getRequestLocale();
   const dictionary = dictionaryFor(locale);
+  const structuredData = buildPersonStructuredData(
+    locale,
+    dictionary.meta.description,
+  );
 
   return (
     <html
@@ -67,6 +95,14 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-ink text-bone antialiased">
+        <script
+          type="application/ld+json"
+          // Serialised from trusted, published content and escaped, so no
+          // visitor-supplied string can close the tag.
+          dangerouslySetInnerHTML={{
+            __html: serializeStructuredData(structuredData),
+          }}
+        />
         <LocaleProvider initialLocale={locale}>
           <a
             href="#main"

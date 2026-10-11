@@ -1,4 +1,4 @@
-# Ahmed Said Shafik — Portfolio (Stage Three)
+# Ahmed Said Shafik — Portfolio
 
 Cinematic athlete portfolio for **Ahmed Said Shafik — أحمد سعيد شفيق**, Egyptian
 international outside hitter. Next.js App Router + TypeScript + Tailwind CSS +
@@ -192,20 +192,50 @@ message client-side. Submission is **unavailable until an email service is
 configured** — the button is disabled and the reason is stated. No success state
 is ever simulated.
 
-`src/app/api/contact/route.ts` is the endpoint slot for stage three; it answers
-`503 delivery_not_configured` today. `resolveContactConfig()` in
-`src/content/contact.ts` reads `CONTACT_PROVIDER`, `CONTACT_API_KEY` and
-`CONTACT_TO_EMAIL` **server-side only**. No credential is ever exposed to the
-browser, and nothing belongs in a `NEXT_PUBLIC_` variable.
+`src/app/api/contact/route.ts` answers `503 delivery_not_configured` until the
+mail service is set up. `resolveContactConfig()` in `src/content/contact.ts`
+reads **`RESEND_API_KEY`**, **`CONTACT_TO_EMAIL`** and `CONTACT_FROM_EMAIL`
+server-side only, and resolves to `null` unless all three are present. No
+credential ever reaches the browser, and none of these may use a `NEXT_PUBLIC_`
+prefix.
+
+Abuse controls are layered and stateless: a honeypot field, a short-lived HMAC
+token minted per render (`src/lib/contact-token.ts`, min age 2.5 s / max age 2h)
+and an in-memory per-IP limiter (`src/lib/contact-rate-limit.ts`). The route
+reports success only after the provider returns 2xx; it never claims inbox
+delivery, and provider errors are surfaced as a generic failure with no upstream
+detail leaked to the visitor. The visitor's address is used only as `reply_to`,
+never in the subject or headers.
+
+## SEO, metadata and deployment
+
+- A cookie-based locale means one URL serves both languages, so the site
+  advertises a single canonical (`https://ahmedshafik.vercel.app`) and no
+  `hreflang` alternates. `Cookie: ash_locale` selects English or Arabic on the
+  same URL.
+- `src/app/robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx` and
+  `apple-icon.tsx` generate the crawler and social assets.
+- Only the Vercel **production** deployment is indexable. Preview and
+  development builds emit `robots: noindex, nofollow` (see
+  `src/lib/deployment.ts` and the test in `tests/contact.test.ts`), so previews
+  can never enter a search index.
+- The canonical origin lives in `src/lib/structured-data.ts`
+  (`PRODUCTION_ORIGIN`). Change it there if the domain changes.
 
 ## Environment variables
 
 See `.env.example`. All are optional; the app runs without any of them.
 
+See [MAINTENANCE.md](./MAINTENANCE.md) for the full editing and operations guide.
+
 ## Still needed from the owner
 
-- A GLB model of Ahmed (or approval to keep the stylised placeholder).
+The software is complete; these inputs are not:
+
+- A GLB model of Ahmed (or approval to keep the stylised placeholder) — see
+  [MAINTENANCE.md](./MAINTENANCE.md) §7 for the required orientation and scale.
 - Photographs and video, cleared for use, for the gallery — the grid and
   accessible lightbox are built and activate as soon as `media.ts` is populated
   with `owner-approved` items that carry intrinsic `width`/`height`.
-- A contact email service plus the recipient address.
+- A contact email service (Resend API key + verified sender) plus the recipient
+  address, set as `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL`.

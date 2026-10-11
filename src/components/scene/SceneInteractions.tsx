@@ -63,7 +63,9 @@ export function SceneActionBar({
 
   return (
     <div className="w-full">
-      <h3 className="eyebrow">{t.scene.actionsLabel}</h3>
+      {/* Heading order: the hero has no other h2, so this group label is the
+          page's first h2 after the h1. Using h3 here skipped a level. */}
+      <h2 className="eyebrow">{t.scene.actionsLabel}</h2>
       <p className="mt-1 text-xs text-bone-faint">{t.scene.actionsHelp}</p>
       <ul className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
         {actions.map((action) => {

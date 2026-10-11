@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import type { Locale } from "@/content/types";
 import { heroFacts } from "@/content/profile";
 import { dictionaryFor, pick } from "@/i18n/dictionary";
+import { useLocale } from "@/i18n/LocaleProvider";
 import { SECTION_IDS, type SceneTarget } from "@/lib/sections";
 import { cn } from "@/lib/cn";
 import { usePrefersReducedMotion } from "@/lib/media";
@@ -13,19 +14,29 @@ import { SceneLoading } from "@/components/scene/SceneStatus";
 import { ScenePanel, type PanelId } from "@/components/scene/ScenePanels";
 import { useExclusivePanel } from "@/components/scene/SceneDialog";
 
+/**
+ * The dynamic load placeholder reads the active locale from context rather than
+ * hardcoding English, so an Arabic visit never flashes an English loading line.
+ */
+function SceneStageLoading() {
+  const { locale } = useLocale();
+  const t = dictionaryFor(locale);
+  return (
+    <div className="overflow-hidden rounded-3xl border border-charcoal-line">
+      <SceneLoading
+        title={t.scene.panelLoading}
+        hint={t.scene.loadingHint}
+        className="h-[32rem] rounded-none border-0"
+      />
+    </div>
+  );
+}
+
 const SceneStage = dynamic(
   () => import("@/components/scene/SceneStage").then((mod) => mod.SceneStage),
   {
     ssr: false,
-    loading: () => (
-      <div className="overflow-hidden rounded-3xl border border-charcoal-line">
-        <SceneLoading
-          title={dictionaryFor("en").scene.panelLoading}
-          hint={dictionaryFor("en").scene.loadingHint}
-          className="h-[32rem] rounded-none border-0"
-        />
-      </div>
-    ),
+    loading: () => <SceneStageLoading />,
   },
 );
 

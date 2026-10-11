@@ -10,7 +10,7 @@ export const en = {
   meta: {
     title: "Ahmed Said Shafik — Egyptian Volleyball Outside Hitter",
     description:
-      "Official portfolio of Ahmed Said Shafik, أحمد سعيد شفيق — Egyptian international outside hitter, born 7 December 1994, 190 cm.",
+      "Portfolio of Ahmed Said Shafik, أحمد سعيد شفيق — Egyptian international outside hitter, born 7 December 1994, 190 cm.",
   },
   nav: {
     profile: "Profile",
@@ -194,6 +194,15 @@ export const en = {
     errorEmail: "Enter a valid email address.",
     errorCategory: "Choose an inquiry category.",
     errorTooLong: "Message is too long.",
+    sending: "Sending…",
+    successTitle: "Message accepted",
+    successBody:
+      "The email service accepted your message. This confirms it was sent, not that it has been read, so a reply may take some time.",
+    successReset: "Send another message",
+    errorTitle: "Message not sent",
+    errorSubmit:
+      "The message could not be sent. Check your connection and try again.",
+    honeypotLabel: "Leave this field empty",
   },
   footer: {
     rights: "Portfolio",
@@ -210,7 +219,7 @@ export const ar: Dictionary = {
   meta: {
     title: "أحمد سعيد شفيق — لاعب كرة طائرة مصري",
     description:
-      "الملف الرسمي للاعب أحمد سعيد شفيق، لاعب كرة طائرة مصري في مركز المضرب الخارجي، مواليد ٧ ديسمبر ١٩٩٤، الطول ١٩٠ سم.",
+      "الملف التعريفي للاعب أحمد سعيد شفيق، لاعب كرة طائرة مصري في مركز المضرب الخارجي، مواليد ٧ ديسمبر ١٩٩٤، الطول ١٩٠ سم.",
   },
   nav: {
     profile: "الملف الشخصي",
@@ -389,6 +398,14 @@ export const ar: Dictionary = {
     errorEmail: "أدخل بريدًا إلكترونيًا صحيحًا.",
     errorCategory: "اختر تصنيف الاستفسار.",
     errorTooLong: "الرسالة طويلة جدًا.",
+    sending: "جارٍ الإرسال…",
+    successTitle: "تم استلام رسالتك",
+    successBody:
+      "قبلت خدمة البريد الإلكتروني رسالتك، وهذا يؤكد إرسالها لا قراءتها، وقد يستغرق الرد بعض الوقت.",
+    successReset: "إرسال رسالة أخرى",
+    errorTitle: "لم يتم إرسال الرسالة",
+    errorSubmit: "تعذّر إرسال الرسالة. تحقّق من اتصالك وحاول مرة أخرى.",
+    honeypotLabel: "اترك هذا الحقل فارغًا",
   },
   footer: {
     rights: "الملف الشخصي",
