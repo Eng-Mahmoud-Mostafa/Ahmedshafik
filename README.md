@@ -239,3 +239,6 @@ The software is complete; these inputs are not:
   with `owner-approved` items that carry intrinsic `width`/`height`.
 - A contact email service (Resend API key + verified sender) plus the recipient
   address, set as `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL`.
+
+[HANDOFF.md](./HANDOFF.md) lists each outstanding item, the exact input required
+and the feature it blocks.
