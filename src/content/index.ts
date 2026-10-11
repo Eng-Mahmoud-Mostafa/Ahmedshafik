@@ -7,4 +7,5 @@ export * from "./press.ts";
 export * from "./beyond.ts";
 export * from "./panels.ts";
 export * from "./media.ts";
+export * from "./instagram.ts";
 export * from "./contact.ts";

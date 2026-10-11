@@ -38,6 +38,7 @@ All site copy lives in typed files under `src/content/`:
 | `press.ts`          | Press coverage and official video highlight links |
 | `beyond.ts`         | Beyond-the-court entries (empty until approved)  |
 | `media.ts`          | Owner-supplied gallery items (empty until assets are supplied) |
+| `instagram.ts`      | Curated Instagram profile + post/Reel permalinks (empty until supplied) |
 | `contact.ts`        | Inquiry categories + delivery configuration     |
 | `panels.ts`         | Read-only selectors the 3D panels render from    |
 
@@ -185,6 +186,30 @@ it leaves the viewport (`frameloop="never"` via IntersectionObserver).
 - Panels trap Tab, close on Escape, and restore focus to the control that opened
   them. The close button is a 44px target in both languages.
 
+## Instagram gallery
+
+The media section also renders a gallery of Ahmed's Instagram posts
+(`src/components/sections/InstagramGallery.tsx`), driven by
+`src/content/instagram.ts`.
+
+- **Curated, not synchronised.** It embeds the exact public post/Reel permalinks
+  the owner supplies, using Instagram's own embed script
+  (`https://www.instagram.com/embed.js`), loaded lazily only once the gallery
+  nears the viewport. Nothing is scraped or downloaded, and there is no
+  automatic feed — an updating feed would need a Business/Creator connection,
+  permissions and server-side credentials, none of which are configured.
+- **Verified source only.** The profile URL and every post URL are validated
+  (`src/lib/instagram.ts`); a URL that is not an `instagram.com` post/Reel is
+  skipped, no handle is guessed, and posts must also pass the `verification`
+  gate.
+- **Honest, stable states.** Each card reserves its space to avoid layout shift,
+  shows a loading state, and falls back to a plain link to Instagram when a post
+  cannot be rendered — never a broken image. Until a verified profile and at
+  least one post are supplied, the gallery shows a designed empty state and
+  embeds nothing.
+- The embeds are **not** wired into the photo lightbox: Instagram's embed does
+  not support that.
+
 ## Contact form
 
 `src/components/sections/ContactForm.tsx` validates name, email, category and
@@ -237,6 +262,9 @@ The software is complete; these inputs are not:
 - Photographs and video, cleared for use, for the gallery — the grid and
   accessible lightbox are built and activate as soon as `media.ts` is populated
   with `owner-approved` items that carry intrinsic `width`/`height`.
+- The **verified** Instagram profile URL and the specific post/Reel links
+  approved for embedding, added to `src/content/instagram.ts` — the gallery
+  embeds nothing and guesses no handle until then.
 - A contact email service (Resend API key + verified sender) plus the recipient
   address, set as `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL`.
 

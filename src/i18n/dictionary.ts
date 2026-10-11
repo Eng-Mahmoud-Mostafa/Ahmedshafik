@@ -154,6 +154,19 @@ export const en = {
     emptyBody:
       "Photographs supplied and cleared by the player will appear here. No third-party image is copied, so the gallery stays empty until then.",
     slotLabel: "Reserved for approved photos",
+    instagramLabel: "From Instagram",
+    instagramIntro:
+      "Posts and Reels from Ahmed's verified Instagram account, embedded from Instagram itself. Nothing is copied or scraped.",
+    instagramOpenProfile: "Open the Instagram profile",
+    instagramOpenPost: "Open this post on Instagram",
+    instagramLoading: "Loading Instagram post…",
+    instagramUnavailable: "This post can't be shown here.",
+    instagramUnavailableHint: "Use the link below to open it on Instagram.",
+    instagramEmptyTitle: "Instagram gallery not connected yet",
+    instagramEmptyBody:
+      "No verified Instagram profile URL or specific post and Reel links have been supplied, so no Instagram content is shown. Nothing is embedded until the account is confirmed, and no handle is guessed.",
+    instagramNote:
+      "Posts are curated links to Ahmed's Instagram account and load directly from Instagram. This gallery is not an automatically synchronised feed.",
     pressLabel: "Press & highlights",
     pressIntro:
       "Match reports and official video highlight links. Each card opens the original publisher.",
@@ -359,6 +372,19 @@ export const ar: Dictionary = {
     emptyBody:
       "ستظهر هنا الصور التي يوفّرها اللاعب ويعتمدها. ولا تُنسخ أي صورة من مصادر أخرى، لذلك يبقى المعرض فارغًا حتى ذلك الحين.",
     slotLabel: "مكان محجوز للصور المعتمدة",
+    instagramLabel: "من إنستغرام",
+    instagramIntro:
+      "منشورات ومقاطع من حساب أحمد الموثّق على إنستغرام، مضمّنة من إنستغرام نفسه. لا يُنسخ أي محتوى ولا يُجمَع آليًا.",
+    instagramOpenProfile: "فتح حساب إنستغرام",
+    instagramOpenPost: "فتح هذا المنشور على إنستغرام",
+    instagramLoading: "جارٍ تحميل منشور إنستغرام…",
+    instagramUnavailable: "تعذّر عرض هذا المنشور هنا.",
+    instagramUnavailableHint: "استخدم الرابط أدناه لفتحه على إنستغرام.",
+    instagramEmptyTitle: "معرض إنستغرام غير متصل بعد",
+    instagramEmptyBody:
+      "لم يُقدَّم رابط حساب إنستغرام الموثّق ولا روابط منشورات أو مقاطع محدّدة، لذلك لا يُعرض أي محتوى من إنستغرام. ولا يُضمَّن أي شيء حتى تأكيد الحساب، ولا يُخمَّن أي اسم مستخدم.",
+    instagramNote:
+      "المنشورات روابط مختارة من حساب أحمد على إنستغرام وتُحمَّل مباشرة من إنستغرام، وهذا المعرض ليس تغذية تُحدَّث تلقائيًا.",
     pressLabel: "الصحافة والمقاطع",
     pressIntro:
       "تقارير المباريات وروابط مقاطع الفيديو الرسمية، ويفتح كل بطاقة المصدر الأصلي.",

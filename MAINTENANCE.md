@@ -123,7 +123,9 @@ mis-typed record.
 
 ---
 
-## 6. Adding photographs and video
+## 6. Adding photographs, video and Instagram
+
+### Owner photographs and video
 
 Owner-supplied media lives in `src/content/media.ts` (the `media` array), which
 is **intentionally empty** until real, cleared assets exist.
@@ -152,6 +154,41 @@ activate with no code change.
 
 **Do not copy third-party images.** Press photography and video stay as links to
 the original publisher in `src/content/press.ts`, never as downloaded files.
+
+### Instagram gallery — `src/content/instagram.ts`
+
+The media section also renders a curated Instagram gallery. It is **curated, not
+automatically synchronised**: it embeds the exact public permalinks you enter and
+nothing else.
+
+```ts
+export const instagram: InstagramConfig = {
+  profileUrl: "",              // verified profile, e.g. "https://www.instagram.com/<handle>/"
+  handle: "",                  // display handle without the @
+  posts: [
+    // {
+    //   id: "match-2025-highlights",
+    //   url: "https://www.instagram.com/reel/<shortcode>/", // or /p/<shortcode>/
+    //   caption: { en: "…", ar: "…" },                    // optional
+    //   verification: "owner-approved",
+    //   sources: [],
+    // },
+  ],
+};
+```
+
+- Only `https://www.instagram.com/{p|reel}/{shortcode}/` links are embedded;
+  anything else is skipped rather than embedded (`src/lib/instagram.ts`), and only
+  `verified` / `owner-approved` posts are rendered.
+- Instagram's own embed script loads **lazily**, only when the gallery nears the
+  viewport. Each card reserves its space, shows a loading state, and offers a
+  plain link to Instagram if the post cannot be shown.
+- **No environment variable is needed** for curated embeds. An automatically
+  updating feed (the Instagram Graph API with a Business/Creator account and a
+  server-side token) is **not** implemented; if added later, keep the token
+  server-side and never use a `NEXT_PUBLIC_` prefix.
+- Do not enter a post URL you have not confirmed belongs to Ahmed, and do not
+  guess the handle. The gallery embeds nothing until both are supplied.
 
 ---
 
@@ -283,6 +320,10 @@ Do not force-push `main`.
 | `CONTACT_TO_EMAIL`              | Server only       | No       | Inquiry recipient                       |
 | `CONTACT_FROM_EMAIL`            | Server only       | No       | Verified Resend sender                  |
 
+The Instagram gallery is a curated embed and needs **no** environment variable.
+An automatically synchronised feed would require a server-side token and is not
+implemented.
+
 ---
 
 ## 12. Outstanding owner inputs
@@ -292,4 +333,6 @@ supplied. See README → *Still needed from the owner* for the same list:
 
 - A GLB model of Ahmed (or approval to keep the stylised placeholder).
 - Photographs and video, cleared for use, for the gallery.
+- The **verified** Instagram profile URL and the approved post/Reel links for the
+  Instagram gallery (`src/content/instagram.ts`).
 - A contact email service (Resend key) and the recipient address.

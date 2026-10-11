@@ -3,15 +3,17 @@ import { dictionaryFor } from "@/i18n/dictionary";
 import { SECTION_IDS } from "@/lib/sections";
 import { SectionHeading, SectionShell } from "@/components/ui/Section";
 import { PhotoGallery } from "./PhotoGallery";
+import { InstagramGallery } from "./InstagramGallery";
 import { PressGrid } from "./PressGrid";
 
 /**
- * Media section: owner-supplied photos first, then press coverage and official
- * video highlights.
+ * Media section: owner-supplied photos, the curated Instagram gallery, then
+ * press coverage and official video highlights.
  *
- * The two are deliberately separate. The gallery only ever shows photographs
- * supplied and cleared by the player; press imagery is never copied, and each
- * press card simply links to the original publisher.
+ * These are deliberately separate. The photo gallery only ever shows
+ * photographs supplied and cleared by the player; the Instagram gallery embeds
+ * the exact public permalinks the player approves; press imagery is never
+ * copied, and each press card simply links to the original publisher.
  */
 export function MediaSection({ locale }: { locale: Locale }) {
   const t = dictionaryFor(locale);
@@ -30,6 +32,18 @@ export function MediaSection({ locale }: { locale: Locale }) {
             {t.media.galleryLabel}
           </h3>
           <PhotoGallery locale={locale} />
+        </div>
+
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <h3 className="font-display text-2xl font-semibold text-bone">
+              {t.media.instagramLabel}
+            </h3>
+            <p className="max-w-2xl text-sm leading-relaxed text-bone-muted">
+              {t.media.instagramIntro}
+            </p>
+          </div>
+          <InstagramGallery locale={locale} />
         </div>
 
         <div className="flex flex-col gap-6">

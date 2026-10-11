@@ -20,6 +20,10 @@ Known, intentional limitations (not defects):
   deliberately no `hreflang` and search engines index one canonical page.
 - The 3D athlete is a **stylised placeholder**, not a likeness. Anyone reading
   the scene should not be told otherwise until item 2 below is supplied.
+- The Instagram gallery is **curated, not automatically synchronised.** It embeds
+  the exact public post/Reel permalinks supplied in `src/content/instagram.ts`
+  and is not connected until a verified profile and post links exist. No feed
+  credentials are configured, and no handle is guessed.
 
 ## 2. Missing owner-supplied assets
 
@@ -28,6 +32,7 @@ Known, intentional limitations (not defects):
 | Athlete model | A `.glb` of Ahmed. Authored **Y-up, facing +Z, in metres** (scale is normalised automatically; feet are grounded at `y = 0`). Hosted at a public URL. | The real 3D athlete. Until supplied, `NEXT_PUBLIC_ATHLETE_MODEL_URL` is unset and the placeholder renders. |
 | Photographs | Original files cleared by Ahmed/management, each with English **and** Arabic title, caption and alt text, plus intrinsic `width`/`height`. Place files in `public/media/`. | The photo gallery, which currently shows its designed empty state. |
 | Video | Hosted links (YouTube/official publisher) cleared for use, with EN/AR title and caption. | The media grid's video entries. No video is embedded or copied today. |
+| Instagram | The **verified** Instagram profile URL, plus the specific public post/Reel URLs approved for embedding (with EN/AR captions if wanted). | The Instagram gallery. Until supplied, `src/content/instagram.ts` stays empty and nothing is embedded or guessed. |
 
 No third-party image is ever copied; press photography stays a link to the
 original publisher in `src/content/press.ts`.
