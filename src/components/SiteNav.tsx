@@ -160,7 +160,7 @@ export function SiteNav() {
                   className="flex w-full items-center justify-between py-4 text-start text-lg text-bone"
                 >
                   {t.nav[item.key]}
-                  <span aria-hidden="true" className="text-egypt-red">
+                  <span aria-hidden="true" className="rtl:rotate-180 text-egypt-red">
                     →
                   </span>
                 </button>

@@ -208,11 +208,14 @@ export function ContactForm({
         </div>
       ) : null}
 
-      {/* Honeypot: hidden from view and assistive technology, tempting to bots. */}
-      <div
-        aria-hidden="true"
-        className="absolute -left-[9999px] top-0 h-px w-px overflow-hidden"
-      >
+      {/*
+        Honeypot: hidden from view and assistive technology, tempting to bots.
+        Clipped with `sr-only` rather than pushed off-screen with a physical
+        `left`, because an off-screen `left` is direction-sensitive: in RTL it
+        extends the document's scrollable area and creates a phantom horizontal
+        scrollbar. Clipping adds no layout overflow in either writing direction.
+      */}
+      <div aria-hidden="true" className="sr-only">
         <label htmlFor={fieldId("company")}>{t.contact.honeypotLabel}</label>
         <input
           id={fieldId("company")}
